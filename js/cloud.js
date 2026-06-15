@@ -54,7 +54,7 @@ function subscribe(){
     /* Aplica el cambio siempre que NO lo haya hecho este mismo dispositivo (aunque sea el mismo correo) */
     if(d && d.data && d.updatedByClient!==CLIENT_ID){
       cloud.applyingRemote=true;
-      try{state=(typeof d.data==='string'?JSON.parse(d.data):d.data);saveLocal();render();}finally{cloud.applyingRemote=false;}
+      try{state=(typeof d.data==='string'?JSON.parse(d.data):d.data);if(typeof migrate==='function')migrate();saveLocal();render();}finally{cloud.applyingRemote=false;}
       checkMentions();
       notify('Cambios de '+(d.updatedBy||'tu equipo'),'Se ha actualizado el workspace de CarDesign');
     }
@@ -65,7 +65,7 @@ function forcePull(){
   if(!cloud.on||!cloud.docRef){location.reload();return;}
   setSyncBadge('Actualizando…',true);
   cloud.docRef.get().then(s=>{
-    if(s.exists){const d=s.data();if(d&&d.data){cloud.applyingRemote=true;try{state=(typeof d.data==='string'?JSON.parse(d.data):d.data);saveLocal();render();}finally{cloud.applyingRemote=false;}}}
+    if(s.exists){const d=s.data();if(d&&d.data){cloud.applyingRemote=true;try{state=(typeof d.data==='string'?JSON.parse(d.data):d.data);if(typeof migrate==='function')migrate();saveLocal();render();}finally{cloud.applyingRemote=false;}}}
     setSyncBadge('Sincronizado · '+cloud.email,true);toast('Actualizado');
   }).catch(()=>{setSyncBadge('Sincronizado · '+cloud.email,true)});
 }
