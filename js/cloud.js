@@ -9,11 +9,13 @@ const FIREBASE_CONFIG = {
   messagingSenderId: "217037893786",
   appId: "1:217037893786:web:289328833eb2884608af23"
 };
-
 /* 2) Solo estos correos podrán entrar. Añade el de tu compañero (Alfon). */
-const ALLOWED_EMAILS=["revistacardesign@gmail.com",
-  "alvaro.murodunabeitia@gmail.com"
-];
+const ALLOWED_EMAILS=["revistacardesign@gmail.com","alvaro.murodunabeitia@gmail.com"];
+
+/* ID único de ESTE dispositivo (estable). Sirve para distinguir entre equipos
+   aunque usen el mismo correo, y así sincronizar siempre que el cambio venga de otro. */
+const CLIENT_ID=(function(){let c=null;try{c=localStorage.getItem('cardesign_client')}catch(e){}
+  if(!c){c=Math.random().toString(36).slice(2)+Date.now().toString(36);try{localStorage.setItem('cardesign_client',c)}catch(e){}}return c;})();
 
 let cloud={on:false,db:null,email:null,docRef:null,applyingRemote:false,timer:null};
 function cloudEnabled(){return typeof firebase!=='undefined' && FIREBASE_CONFIG && FIREBASE_CONFIG.apiKey}
@@ -27,6 +29,8 @@ function initCloud(){
   cloud.db=firebase.firestore();
   const lo=document.getElementById('localOnly');if(lo)lo.onclick=()=>{hideLogin();setSyncBadge('Solo este dispositivo',false)};
   const gb=document.getElementById('googleBtn');if(gb)gb.onclick=()=>{firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e=>{const el=document.getElementById('loginErr');if(el)el.textContent=e.message})};
+  /* El indicador de sincronización es pulsable: fuerza una actualización al instante */
+  const sb=document.getElementById('syncBadge');if(sb){sb.style.cursor='pointer';sb.title='Pulsa para actualizar ahora';sb.onclick=forcePull;}
   firebase.auth().onAuthStateChanged(u=>{
     if(u){
       if(ALLOWED_EMAILS.length && ALLOWED_EMAILS.indexOf(u.email)===-1){const el=document.getElementById('loginErr');if(el)el.textContent='Email no autorizado: '+u.email;firebase.auth().signOut();return;}
@@ -36,20 +40,30 @@ function initCloud(){
 }
 function subscribe(){
   cloud.docRef=cloud.db.collection('workspaces').doc('cardesign');
-  cloud.docRef.onSnapshot(snap=>{
-    if(!snap.exists){cloud.docRef.set({data:state,updatedBy:cloud.email,updatedAt:Date.now()});return;}
+  cloud.docRef.onSnapshot({includeMetadataChanges:false},snap=>{
+    if(!snap.exists){cloud.docRef.set({data:state,updatedBy:cloud.email,updatedByClient:CLIENT_ID,updatedAt:Date.now()});return;}
     const d=snap.data();
-    if(d && d.data && d.updatedBy && d.updatedBy!==cloud.email){
+    /* Aplica el cambio siempre que NO lo haya hecho este mismo dispositivo (aunque sea el mismo correo) */
+    if(d && d.data && d.updatedByClient!==CLIENT_ID){
       cloud.applyingRemote=true;
       try{state=d.data;saveLocal();render();}finally{cloud.applyingRemote=false;}
-      notify('Cambios de '+d.updatedBy,'Se ha actualizado el workspace de CarDesign');
+      notify('Cambios de '+(d.updatedBy||'tu equipo'),'Se ha actualizado el workspace de CarDesign');
     }
   },function(){setSyncBadge('Error de sincronización',false)});
+}
+/* Trae manualmente la última versión desde la nube y refresca */
+function forcePull(){
+  if(!cloud.on||!cloud.docRef){location.reload();return;}
+  setSyncBadge('Actualizando…',true);
+  cloud.docRef.get().then(s=>{
+    if(s.exists){const d=s.data();if(d&&d.data){cloud.applyingRemote=true;try{state=d.data;saveLocal();render();}finally{cloud.applyingRemote=false;}}}
+    setSyncBadge('Sincronizado · '+cloud.email,true);toast('Actualizado');
+  }).catch(()=>{setSyncBadge('Sincronizado · '+cloud.email,true)});
 }
 function cloudPush(){
   if(!cloud.on||cloud.applyingRemote||!cloud.docRef)return;
   clearTimeout(cloud.timer);
-  cloud.timer=setTimeout(function(){cloud.docRef.set({data:state,updatedBy:cloud.email,updatedAt:Date.now()}).catch(function(){})},700);
+  cloud.timer=setTimeout(function(){cloud.docRef.set({data:state,updatedBy:cloud.email,updatedByClient:CLIENT_ID,updatedAt:Date.now()}).catch(function(){})},700);
 }
 function askNotifyPermission(){if('Notification'in window && Notification.permission==='default'){Notification.requestPermission()}}
 function notify(title,body){toast(body);if('Notification'in window && Notification.permission==='granted'){try{new Notification(title,{body:body,icon:'assets/logo.png'})}catch(e){}}}
