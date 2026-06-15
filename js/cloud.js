@@ -49,12 +49,12 @@ function initCloud(){
 function subscribe(){
   cloud.docRef=cloud.db.collection('workspaces').doc('cardesign');
   cloud.docRef.onSnapshot(snap=>{
-    if(!snap.exists){cloud.docRef.set({data:state,updatedBy:cloud.email,updatedByClient:CLIENT_ID,updatedAt:Date.now()});return;}
+    if(!snap.exists){cloud.docRef.set({data:JSON.stringify(state),updatedBy:cloud.email,updatedByClient:CLIENT_ID,updatedAt:Date.now()}).catch(function(){});return;}
     const d=snap.data();
     /* Aplica el cambio siempre que NO lo haya hecho este mismo dispositivo (aunque sea el mismo correo) */
     if(d && d.data && d.updatedByClient!==CLIENT_ID){
       cloud.applyingRemote=true;
-      try{state=d.data;saveLocal();render();}finally{cloud.applyingRemote=false;}
+      try{state=(typeof d.data==='string'?JSON.parse(d.data):d.data);saveLocal();render();}finally{cloud.applyingRemote=false;}
       notify('Cambios de '+(d.updatedBy||'tu equipo'),'Se ha actualizado el workspace de CarDesign');
     }
   },function(){setSyncBadge('Error de sincronización',false)});
@@ -64,14 +64,14 @@ function forcePull(){
   if(!cloud.on||!cloud.docRef){location.reload();return;}
   setSyncBadge('Actualizando…',true);
   cloud.docRef.get().then(s=>{
-    if(s.exists){const d=s.data();if(d&&d.data){cloud.applyingRemote=true;try{state=d.data;saveLocal();render();}finally{cloud.applyingRemote=false;}}}
+    if(s.exists){const d=s.data();if(d&&d.data){cloud.applyingRemote=true;try{state=(typeof d.data==='string'?JSON.parse(d.data):d.data);saveLocal();render();}finally{cloud.applyingRemote=false;}}}
     setSyncBadge('Sincronizado · '+cloud.email,true);toast('Actualizado');
   }).catch(()=>{setSyncBadge('Sincronizado · '+cloud.email,true)});
 }
 function cloudPush(){
   if(!cloud.on||cloud.applyingRemote||!cloud.docRef)return;
   clearTimeout(cloud.timer);
-  cloud.timer=setTimeout(function(){cloud.docRef.set({data:state,updatedBy:cloud.email,updatedByClient:CLIENT_ID,updatedAt:Date.now()}).catch(function(){})},700);
+  cloud.timer=setTimeout(function(){cloud.docRef.set({data:JSON.stringify(state),updatedBy:cloud.email,updatedByClient:CLIENT_ID,updatedAt:Date.now()}).catch(function(){})},700);
 }
 function askNotifyPermission(){if('Notification'in window && Notification.permission==='default'){Notification.requestPermission()}}
 function notify(title,body){toast(body);if('Notification'in window && Notification.permission==='granted'){try{new Notification(title,{body:body,icon:'assets/logo.png'})}catch(e){}}}
