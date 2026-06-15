@@ -1,0 +1,54 @@
+{
+  "id": "redes",
+  "slug": "redes-sociales",
+  "name": "Redes Sociales",
+  "emoji": "📱",
+  "description": "Gestión de redes: planificación, creación, publicación y seguimiento.",
+  "tasks": [
+    {
+      "id": "rs1",
+      "title": "Calendario de publicaciones",
+      "section": "Planificación",
+      "status": "doing",
+      "priority": "alta",
+      "due": "",
+      "notes": ""
+    },
+    {
+      "id": "rs2",
+      "title": "Plantillas de carruseles y reels",
+      "section": "Producción",
+      "status": "todo",
+      "priority": "media",
+      "due": "",
+      "notes": ""
+    },
+    {
+      "id": "rs3",
+      "title": "Adaptar artículos de la revista a redes",
+      "section": "Producción",
+      "status": "todo",
+      "priority": "media",
+      "due": "",
+      "notes": ""
+    },
+    {
+      "id": "rs4",
+      "title": "Programación y publicación",
+      "section": "Operación",
+      "status": "todo",
+      "priority": "media",
+      "due": "",
+      "notes": ""
+    },
+    {
+      "id": "rs5",
+      "title": "Seguimiento de métricas",
+      "section": "Operación",
+      "status": "todo",
+      "priority": "baja",
+      "due": "",
+      "notes": ""
+    }
+  ]
+}

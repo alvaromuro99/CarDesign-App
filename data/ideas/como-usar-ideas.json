@@ -1,0 +1,23 @@
+{
+  "id": "idea-bienvenida",
+  "slug": "como-usar-ideas",
+  "title": "Cómo usar Ideas",
+  "emoji": "💡",
+  "folder": "General",
+  "blocks": [
+    {
+      "id": "b1",
+      "type": "text",
+      "text": "Este es tu espacio de contenido, no de tareas. Aquí guardas ideas que aún no se han materializado: temas, conceptos, listas, tablas...\n\nCrea páginas, agrúpalas en carpetas (edita el campo \"Carpeta\") y añade bloques de Texto, Lista o Tabla."
+    },
+    {
+      "id": "b2",
+      "type": "list",
+      "items": [
+        "Idea de artículo",
+        "Idea de reportaje",
+        "Idea de vídeo / Reel"
+      ]
+    }
+  ]
+}

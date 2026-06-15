@@ -1,0 +1,534 @@
+{
+  "id": "f1",
+  "slug": "f1-gp-espana",
+  "name": "F1 · GP de España (Exposición con FEVER)",
+  "emoji": "🏎️",
+  "description": "Exposición durante el GP de España de F1 (fin de semana 11–13 septiembre, IFEMA). FEVER nos ha contratado para una exposición de 48 coches dividida en dos bloques: \"Marca España\" y \"Superdeportivos / Escuderías\". Presupuesto cerrado. Ahora: cerrar la lista estimada y conseguir su aprobación por IFEMA, además de confirmar la disponibilidad real de cada coche.",
+  "cars": {
+    "marcaEspana": [
+      {
+        "id": "me1",
+        "marca": "Tapia",
+        "modelo": "Hispano Suiza H6B Le Baron",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me2",
+        "marca": "Tapia",
+        "modelo": "Hispano Suiza T49",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me3",
+        "marca": "Tapia",
+        "modelo": "Hispano Suiza T49",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me4",
+        "marca": "Tapia",
+        "modelo": "Hispano Suiza HP16 T30",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me5",
+        "marca": "Pueche",
+        "modelo": "Hispano Suiza Alfonso XIII",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me6",
+        "marca": "Pueche",
+        "modelo": "Hispano Suiza T30 Rabassada",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me7",
+        "marca": "Otro",
+        "modelo": "Hispano Suiza",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me8",
+        "marca": "Otro",
+        "modelo": "Hispano Suiza",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me9",
+        "marca": "Robert (Bob) Bishop",
+        "modelo": "Pegaso Z-102 Touring",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me10",
+        "marca": "Pueche",
+        "modelo": "Pegaso Z-102",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me11",
+        "marca": "Pueche",
+        "modelo": "Pegaso Z-102",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me12",
+        "marca": "Antonio",
+        "modelo": "Pegaso Z-102",
+        "estado": "pendiente",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me13",
+        "marca": "Rodrigo",
+        "modelo": "Dodge Serra Prototipo",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me14",
+        "marca": "Barreiros",
+        "modelo": "Dodge Dart Barreiros",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me15",
+        "marca": "Seat Históricos",
+        "modelo": "Seat Formula",
+        "estado": "pendiente",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me16",
+        "marca": "Hispano Alemán",
+        "modelo": "Vizcaya",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me17",
+        "marca": "Hispano Alemán",
+        "modelo": "Castilla",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me18",
+        "marca": "Xoan Lorenzo",
+        "modelo": "De Lorenzo",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me19",
+        "marca": "Spania GTA",
+        "modelo": "GTA Spano",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me20",
+        "marca": "Hispano Suiza",
+        "modelo": "Carmen / Carmen Sagrera (2 modelos)",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me21",
+        "marca": "Zenvo",
+        "modelo": "Zenvo Aurora",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me22",
+        "marca": "Zenvo",
+        "modelo": "Zenvo Aurora (monocasco suelto)",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me23",
+        "marca": "Garagisti & Co",
+        "modelo": "GP1",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "me24",
+        "marca": "Kimera",
+        "modelo": "K39",
+        "estado": "pendiente",
+        "encargado": "",
+        "ifema": false
+      }
+    ],
+    "escuderias": [
+      {
+        "id": "es1",
+        "marca": "McLaren",
+        "modelo": "Senna GTR LM",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es2",
+        "marca": "McLaren",
+        "modelo": "P1",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es3",
+        "marca": "Aston Martin",
+        "modelo": "Vanquish Zagato Speedster",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es4",
+        "marca": "Aston Martin",
+        "modelo": "Valkyrie AMR PRO Road Legal",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es5",
+        "marca": "Mercedes",
+        "modelo": "SLR McLaren 722",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es6",
+        "marca": "Alfa Romeo",
+        "modelo": "33 Stradale",
+        "estado": "pendiente",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es7",
+        "marca": "Alfa Romeo",
+        "modelo": "TZ2 Nacional",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es8",
+        "marca": "Alfa Romeo",
+        "modelo": "8C Disco Volante Manual",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es9",
+        "marca": "Alpine",
+        "modelo": "A110 R 70 Aniversario",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es10",
+        "marca": "Bertone",
+        "modelo": "Runabout",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es11",
+        "marca": "Bertone",
+        "modelo": "GB110",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es12",
+        "marca": "Nichols",
+        "modelo": "N1A",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es13",
+        "marca": "Gordon Murray Automotive",
+        "modelo": "T.50",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es14",
+        "marca": "Pagani Automobili",
+        "modelo": "Huayra R",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es15",
+        "marca": "Hennessey",
+        "modelo": "Venom F5",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es16",
+        "marca": "Czinger",
+        "modelo": "21C",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es17",
+        "marca": "Praga Automobile",
+        "modelo": "Bohema",
+        "estado": "pendiente",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es18",
+        "marca": "Koenigsegg",
+        "modelo": "Jesko",
+        "estado": "pendiente",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es19",
+        "marca": "Lamborghini",
+        "modelo": "Miura SV",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es20",
+        "marca": "Lamborghini",
+        "modelo": "Countach Safety Car F1 1982",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es21",
+        "marca": "Porsche",
+        "modelo": "Carrera GT",
+        "estado": "pendiente",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es22",
+        "marca": "Totem Automobili",
+        "modelo": "GT Super",
+        "estado": "pendiente",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es23",
+        "marca": "Bugatti",
+        "modelo": "Mistral",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es24",
+        "marca": "Ferrari",
+        "modelo": "599 Nibbio Zagato",
+        "estado": "pendiente",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es25",
+        "marca": "Ferrari",
+        "modelo": "Purosangue One-Off",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es26",
+        "marca": "Ferrari",
+        "modelo": "Enzo",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es27",
+        "marca": "Porsche",
+        "modelo": "911 RWB",
+        "estado": "confirmado",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es28",
+        "marca": "Mercedes",
+        "modelo": "AMG GT Black Series",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es29",
+        "marca": "Aston Martin",
+        "modelo": "Valiant",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es30",
+        "marca": "Ferrari",
+        "modelo": "330 GTC (Villa d'Este)",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es31",
+        "marca": "Xiaomi",
+        "modelo": "SU7 Ultra / Vision Gran Turismo (concept)",
+        "estado": "pendiente",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es32",
+        "marca": "Marc Philip Gemballa",
+        "modelo": "Marsien",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      },
+      {
+        "id": "es33",
+        "marca": "Sbarro",
+        "modelo": "GTR",
+        "estado": "interes",
+        "encargado": "",
+        "ifema": false
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "f1t1",
+      "title": "Cerrar concepto y fechas con FEVER e IFEMA",
+      "section": "Planificación",
+      "status": "done",
+      "priority": "alta",
+      "due": "",
+      "notes": ""
+    },
+    {
+      "id": "f1t2",
+      "title": "Presupuesto del evento",
+      "section": "Planificación",
+      "status": "done",
+      "priority": "alta",
+      "due": "",
+      "notes": "Cerrado con FEVER."
+    },
+    {
+      "id": "f1t3",
+      "title": "Cerrar lista estimada de 48 coches y conseguir aprobación de IFEMA",
+      "section": "Coches",
+      "status": "doing",
+      "priority": "alta",
+      "due": "",
+      "notes": "Ver pestaña Coches. Lista enviada para aprobación."
+    },
+    {
+      "id": "f1t4",
+      "title": "Confirmar disponibilidad de los coches en \"Interés / Pendiente\"",
+      "section": "Coches",
+      "status": "doing",
+      "priority": "alta",
+      "due": "",
+      "notes": "Confirmar que disponemos realmente de cada coche."
+    },
+    {
+      "id": "f1t5",
+      "title": "Logística de montaje en IFEMA",
+      "section": "Logística",
+      "status": "todo",
+      "priority": "media",
+      "due": "",
+      "notes": "Espacio, transporte de coches, seguros, montaje/desmontaje."
+    },
+    {
+      "id": "f1t6",
+      "title": "Equipo de vídeo y foto para el evento",
+      "section": "Producción",
+      "status": "todo",
+      "priority": "media",
+      "due": "",
+      "notes": ""
+    },
+    {
+      "id": "f1t7",
+      "title": "Plan de comunicación y prensa",
+      "section": "Comunicación",
+      "status": "todo",
+      "priority": "baja",
+      "due": "",
+      "notes": ""
+    }
+  ]
+}

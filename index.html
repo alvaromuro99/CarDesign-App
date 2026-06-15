@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f1115">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<title>CarDesign · Workspace</title>
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+  <button id="hamb" class="hamb" aria-label="Menú">☰</button>
+  <div id="overlay"></div>
+  <aside id="sidebar">
+    <div class="brand">
+      <img src="assets/logo.png" class="logo-img" alt="CarDesign.es">
+      <div class="spacer"></div>
+      <button class="theme-btn" id="themeBtn" title="Día / Noche">🌙</button>
+    </div>
+    <div class="navlist" id="navlist"></div>
+    <button class="side-btn" id="addProj">+ Nuevo proyecto</button>
+    <div class="sync-badge" id="syncBadge"><span class="d"></span><span class="t">Solo este dispositivo</span></div>
+    <div class="side-foot">
+      <button id="exportJson" title="Descarga toda la base de datos en un .json (copia de seguridad)">💾 Guardar BD</button>
+      <button id="importJson" title="Carga una base de datos .json guardada antes">📂 Importar BD</button>
+      <button id="exportMd" title="Exporta todo a un documento Markdown legible">⎙ Markdown</button>
+      <input type="file" id="fileInput" accept=".json" hidden>
+    </div>
+  </aside>
+  <main id="main">
+    <div class="topbar" id="topbar"></div>
+    <div class="content" id="content"></div>
+  </main>
+  <div class="toast" id="toast"></div>
+  <div class="login-ov" id="login" style="display:none">
+    <div class="login-card">
+      <img src="assets/logo.png" alt="CarDesign">
+      <p>Inicia sesión para sincronizar el workspace con tu equipo.</p>
+      <button class="gbtn" id="googleBtn">Entrar con Google</button>
+      <p class="err" id="loginErr"></p>
+      <button class="linklike" id="localOnly">Usar solo en este dispositivo</button>
+    </div>
+  </div>
+  <script src="js/data.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/ideas.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/cloud.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
