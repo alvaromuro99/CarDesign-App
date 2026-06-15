@@ -18,7 +18,7 @@ const ALLOWED_EMAILS=["revistacardesign@gmail.com",
 let cloud={on:false,db:null,email:null,docRef:null,applyingRemote:false,timer:null};
 function cloudEnabled(){return typeof firebase!=='undefined' && FIREBASE_CONFIG && FIREBASE_CONFIG.apiKey}
 function setSyncBadge(txt,on){const b=document.getElementById('syncBadge');if(b){const t=b.querySelector('.t');if(t)t.textContent=txt;b.classList.toggle('on',!!on)}}
-function showLogin(){const l=doaument.getElementById('login');if(l)l.style.display='flex'}
+function showLogin(){const l=document.getElementById('login');if(l)l.style.display='flex'}
 function hideLogin(){const l=document.getElementById('login');if(l)l.style.display='none'}
 
 function initCloud(){
@@ -51,5 +51,4 @@ function cloudPush(){
   clearTimeout(cloud.timer);
   cloud.timer=setTimeout(function(){cloud.docRef.set({data:state,updatedBy:cloud.email,updatedAt:Date.now()}).catch(function(){})},700);
 }
-function askNotifyPermission(){if('Notification'in window && Notification.permission==='default'){Notification.requestPermission()}}
-function notify(title,body){toast(body);if('Notification'in window && Notification.permission==='granted'){try{new Notification(title,{body:body,icon:'assets/logo.png'})}catch(e){}}}
+function askNotifyPermission(){if('Notification'in window && Notification.permission
