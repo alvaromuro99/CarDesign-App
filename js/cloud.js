@@ -42,7 +42,7 @@ function initCloud(){
   firebase.auth().onAuthStateChanged(u=>{
     if(u){
       if(ALLOWED_EMAILS.length && ALLOWED_EMAILS.indexOf(u.email)===-1){const el=document.getElementById('loginErr');if(el)el.textContent='Email no autorizado: '+u.email;firebase.auth().signOut();return;}
-      cloud.on=true;cloud.email=u.email;hideLogin();setSyncBadge('Sincronizado · '+u.email,true);showLogout();askNotifyPermission();subscribe();
+      cloud.on=true;cloud.email=u.email;hideLogin();setSyncBadge('Sincronizado · '+u.email,true);showLogout();askNotifyPermission();try{if(!localStorage.getItem('cardesign_seen_mentions'))localStorage.setItem('cardesign_seen_mentions',String(Date.now()));}catch(e){}subscribe();
     }else{cloud.on=false;showLogin();setSyncBadge('Sin sesión',false);}
   });
 }
@@ -55,6 +55,7 @@ function subscribe(){
     if(d && d.data && d.updatedByClient!==CLIENT_ID){
       cloud.applyingRemote=true;
       try{state=(typeof d.data==='string'?JSON.parse(d.data):d.data);saveLocal();render();}finally{cloud.applyingRemote=false;}
+      checkMentions();
       notify('Cambios de '+(d.updatedBy||'tu equipo'),'Se ha actualizado el workspace de CarDesign');
     }
   },function(){setSyncBadge('Error de sincronización',false)});
@@ -72,6 +73,20 @@ function cloudPush(){
   if(!cloud.on||cloud.applyingRemote||!cloud.docRef)return;
   clearTimeout(cloud.timer);
   cloud.timer=setTimeout(function(){cloud.docRef.set({data:JSON.stringify(state),updatedBy:cloud.email,updatedByClient:CLIENT_ID,updatedAt:Date.now()}).catch(function(){})},700);
+}
+function checkMentions(){
+  try{
+    var me=(typeof currentMemberId==='function')?currentMemberId():null; if(!me)return;
+    var lastSeen=+(localStorage.getItem('cardesign_seen_mentions')||0); var maxTs=lastSeen;
+    (state.tasks||[]).forEach(function(t){(t.comments||[]).forEach(function(c){
+      if(c.ts>lastSeen && c.author!==me && (c.mentions||[]).indexOf(me)>-1){
+        var p=(typeof proj==='function')?proj(t.projectId):null;
+        notify('Te han mencionado','"'+(c.text||'').slice(0,80)+'"'+(p?(' · '+p.name):''));
+      }
+      if(c.ts>maxTs)maxTs=c.ts;
+    });});
+    localStorage.setItem('cardesign_seen_mentions',String(maxTs));
+  }catch(e){}
 }
 function askNotifyPermission(){if('Notification'in window && Notification.permission==='default'){Notification.requestPermission()}}
 function notify(title,body){toast(body);if('Notification'in window && Notification.permission==='granted'){try{new Notification(title,{body:body,icon:'assets/logo.png'})}catch(e){}}}
