@@ -51,4 +51,5 @@ function cloudPush(){
   clearTimeout(cloud.timer);
   cloud.timer=setTimeout(function(){cloud.docRef.set({data:state,updatedBy:cloud.email,updatedAt:Date.now()}).catch(function(){})},700);
 }
-function askNotifyPermission(){if('Notification'in window && Notification.permission
+function askNotifyPermission(){if('Notification'in window && Notification.permission==='default'){Notification.requestPermission()}}
+function notify(title,body){toast(body);if('Notification'in window && Notification.permission==='granted'){try{new Notification(title,{body:body,icon:'assets/logo.png'})}catch(e){}}}
