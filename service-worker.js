@@ -1,5 +1,5 @@
-const CACHE='cardesign-v1';
-const ASSETS=['.','index.html','css/styles.css','js/data.js','js/projects.js','js/ideas.js','js/render.js','js/cloud.js','js/app.js','assets/logo.png','manifest.webmanifest','data/index.json'];
+const CACHE='cardesign-v2';
+const ASSETS=['.','index.html','css/styles.css','js/data.js','js/board.js','js/notion.js','js/render.js','js/cloud.js','js/app.js','assets/logo.png','manifest.webmanifest','data/index.json'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).catch(()=>{}));self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));self.clients.claim()});
 self.addEventListener('fetch',e=>{

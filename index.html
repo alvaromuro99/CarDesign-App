@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="theme-color" content="#0f1115">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="assets/logo.png">
@@ -22,7 +22,6 @@
       <button class="theme-btn" id="themeBtn" title="Día / Noche">🌙</button>
     </div>
     <div class="navlist" id="navlist"></div>
-    <button class="side-btn" id="addProj">+ Nuevo proyecto</button>
     <div class="sync-badge" id="syncBadge"><span class="d"></span><span class="t">Solo este dispositivo</span></div>
     <div class="side-foot">
       <button id="exportJson" title="Descarga toda la base de datos en un .json (copia de seguridad)">💾 Guardar BD</button>
@@ -36,6 +35,7 @@
     <div class="content" id="content"></div>
   </main>
   <div class="toast" id="toast"></div>
+  <div id="modalRoot"></div>
   <div class="login-ov" id="login" style="display:none">
     <div class="login-card">
       <img src="assets/logo.png" alt="CarDesign">
@@ -46,8 +46,8 @@
     </div>
   </div>
   <script src="js/data.js"></script>
-  <script src="js/projects.js"></script>
-  <script src="js/ideas.js"></script>
+  <script src="js/board.js"></script>
+  <script src="js/notion.js"></script>
   <script src="js/render.js"></script>
   <script src="js/cloud.js"></script>
   <script src="js/app.js"></script>
