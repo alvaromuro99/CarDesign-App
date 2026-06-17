@@ -1,7 +1,22 @@
 import React, { useState } from 'react';
-import { finances, addMovement, updateMovement, deleteMovement, projects, members, member, sales, addSale, updateSale, deleteSale } from './store';
+import { finances, addMovement, updateMovement, deleteMovement, projects, members, member, sales, addSale, updateSale, deleteSale, financeSummary } from './store';
 const eur = (n: number) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(n || 0);
+const eur0 = (n: number) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n || 0);
 const whoLabel = (w: string) => w === 'empresa' ? 'Revista (empresa)' : (member(w)?.name || w);
+const MESES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+function MonthChart({ ing, gas }: { ing: number[]; gas: number[] }) {
+  const max = Math.max(1, ...ing, ...gas);
+  const H = 120, W = 560, n = 12, gw = W / n;
+  return (<svg className="mchart" viewBox={`0 0 ${W} ${H + 22}`} preserveAspectRatio="xMidYMid meet">
+    {ing.map((_, i) => { const bw = gw * 0.32; const ih = ing[i] / max * H, gh = gas[i] / max * H; const x = i * gw + gw / 2;
+      return <g key={i}>
+        <rect x={x - bw - 1} y={H - ih} width={bw} height={ih} rx={2} fill="#3ec46d" />
+        <rect x={x + 1} y={H - gh} width={bw} height={gh} rx={2} fill="#e63946" />
+        <text x={x} y={H + 14} textAnchor="middle" fontSize="9" fill="var(--muted)">{MESES[i]}</text>
+      </g>; })}
+  </svg>);
+}
 
 export default function Finances() {
   const [tab, setTab] = useState<'mov' | 'ventas'>('mov');
@@ -9,17 +24,22 @@ export default function Finances() {
   const years = Array.from(new Set([...all.map(m => (m.date || '').slice(0, 4)), ...sales().map(s => (s.date || '').slice(0, 4))].filter(Boolean))).sort().reverse();
   const [year, setYear] = useState<string>(years[0] || String(new Date().getFullYear()));
   const whoOpts = ['empresa', ...members().map(m => m.id)];
+  const from = year ? year + '-01-01' : '', to = year ? year + '-12-31' : '';
+  const sum = financeSummary(from, to);
 
   const movList = all.filter(m => !year || (m.date || '').slice(0, 4) === year).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-  const ingresos = movList.filter(m => m.type === 'ingreso').reduce((s, m) => s + (+m.amount || 0), 0);
-  const gastos = movList.filter(m => m.type === 'gasto').reduce((s, m) => s + (+m.amount || 0), 0);
-  const ivaRep = movList.filter(m => m.type === 'ingreso').reduce((s, m) => s + (+m.amount || 0) * (+m.iva || 0) / 100, 0);
-  const ivaSop = movList.filter(m => m.type === 'gasto').reduce((s, m) => s + (+m.amount || 0) * (+m.iva || 0) / 100, 0);
-  const neto = ingresos - gastos;
-  const byCat: Record<string, { i: number; g: number }> = {};
-  movList.forEach(m => { (byCat[m.category] = byCat[m.category] || { i: 0, g: 0 })[m.type === 'ingreso' ? 'i' : 'g'] += (+m.amount || 0); });
-
   const ventasList = sales().filter(s => !year || (s.date || '').slice(0, 4) === year).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+  // Por área (movimientos + ventas integradas)
+  const byCat: Record<string, { i: number; g: number }> = {};
+  movList.forEach(m => { (byCat[m.category || 'General'] = byCat[m.category || 'General'] || { i: 0, g: 0 })[m.type === 'ingreso' ? 'i' : 'g'] += (+m.amount || 0); });
+  ventasList.forEach(s => { const k = s.type === 'anuario' ? 'Venta anuarios' : 'Publicidad'; (byCat[k] = byCat[k] || { i: 0, g: 0 }).i += (+s.amount || 0); });
+
+  // Evolución mensual del año
+  const ing = Array(12).fill(0), gas = Array(12).fill(0);
+  if (year) { movList.forEach(m => { const mo = +(m.date || '').slice(5, 7) - 1; if (mo >= 0) (m.type === 'ingreso' ? ing : gas)[mo] += (+m.amount || 0); });
+    ventasList.forEach(s => { const mo = +(s.date || '').slice(5, 7) - 1; if (mo >= 0) ing[mo] += (+s.amount || 0); }); }
+
   const anuariosVendidos = ventasList.filter(s => s.type === 'anuario').reduce((s, x) => s + (+x.units || 0), 0);
   const ingAnuario = ventasList.filter(s => s.type === 'anuario').reduce((s, x) => s + (+x.amount || 0), 0);
   const ingPub = ventasList.filter(s => s.type === 'publicidad').reduce((s, x) => s + (+x.amount || 0), 0);
@@ -27,7 +47,7 @@ export default function Finances() {
   return (<div className="boardwrap"><div className="topbar"><span className="crumb">💰 Finanzas</span></div>
     <div className="finwrap">
       <div className="toolbar">
-        <div className="views"><button className={tab === 'mov' ? 'on' : ''} onClick={() => setTab('mov')}>Movimientos</button><button className={tab === 'ventas' ? 'on' : ''} onClick={() => setTab('ventas')}>Ventas anuario</button></div>
+        <div className="views"><button className={tab === 'mov' ? 'on' : ''} onClick={() => setTab('mov')}>Resumen y movimientos</button><button className={tab === 'ventas' ? 'on' : ''} onClick={() => setTab('ventas')}>Ventas anuario</button></div>
         <select className="fsel" value={year} onChange={e => setYear(e.target.value)}><option value="">Todos los años</option>{years.map(y => <option key={y} value={y}>{y}</option>)}{!years.includes(year) && year && <option value={year}>{year}</option>}</select>
         <span style={{ flex: 1 }} />
         {tab === 'mov' ? <button className="addtask" onClick={() => addMovement({ date: (year && year.length === 4 ? year : String(new Date().getFullYear())) + new Date().toISOString().slice(4, 10) })}>+ Movimiento</button>
@@ -35,14 +55,19 @@ export default function Finances() {
       </div>
 
       {tab === 'mov' ? <>
-        <div className="fincards">
-          <div className="fcard"><div className="fl">Ingresos</div><div className="fv" style={{ color: '#3ec46d' }}>{eur(ingresos)}</div></div>
-          <div className="fcard"><div className="fl">Gastos</div><div className="fv" style={{ color: '#e63946' }}>{eur(gastos)}</div></div>
-          <div className="fcard"><div className="fl">Resultado (beneficio)</div><div className="fv" style={{ color: neto >= 0 ? '#3ec46d' : '#e63946' }}>{eur(neto)}</div></div>
-          <div className="fcard"><div className="fl">IVA repercutido − soportado</div><div className="fv" style={{ fontSize: 20 }}>{eur(ivaRep - ivaSop)}</div></div>
+        <div className="fincards k5">
+          <div className="fcard"><div className="fl">Ingresos</div><div className="fv" style={{ color: '#3ec46d' }}>{eur0(sum.ingresos)}</div><div className="ksub">incl. ventas anuario</div></div>
+          <div className="fcard"><div className="fl">Gastos</div><div className="fv" style={{ color: '#e63946' }}>{eur0(sum.gastos)}</div></div>
+          <div className="fcard"><div className="fl">Beneficio</div><div className="fv" style={{ color: sum.neto >= 0 ? '#3ec46d' : '#e63946' }}>{eur0(sum.neto)}</div></div>
+          <div className="fcard"><div className="fl">Margen</div><div className="fv">{sum.margen.toFixed(0)}%</div></div>
+          <div className="fcard"><div className="fl">IVA a liquidar</div><div className="fv" style={{ fontSize: 22 }}>{eur0(sum.ivaLiq)}</div><div className="ksub">{eur0(sum.ivaRep)} rep. − {eur0(sum.ivaSop)} sop.</div></div>
         </div>
-        <div className="finbox"><div className="csub">Por área</div><table className="nt"><tbody><tr><th>Área</th><th>Ingresos</th><th>Gastos</th><th>Neto</th></tr>{Object.keys(byCat).sort().map(k => <tr key={k}><td>{k}</td><td style={{ color: '#3ec46d' }}>{eur(byCat[k].i)}</td><td style={{ color: '#e63946' }}>{eur(byCat[k].g)}</td><td><b>{eur(byCat[k].i - byCat[k].g)}</b></td></tr>)}</tbody></table></div>
-        <div className="csub" style={{ marginTop: 16 }}>Movimientos {year && `· ${year}`}</div>
+        <div className="finrow">
+          <div className="finbox"><div className="csub">Por área (incluye ventas)</div><table className="nt"><tbody><tr><th>Área</th><th>Ingresos</th><th>Gastos</th><th>Neto</th></tr>{Object.keys(byCat).sort().map(k => <tr key={k}><td>{k}</td><td style={{ color: '#3ec46d' }}>{eur0(byCat[k].i)}</td><td style={{ color: '#e63946' }}>{eur0(byCat[k].g)}</td><td><b>{eur0(byCat[k].i - byCat[k].g)}</b></td></tr>)}{!Object.keys(byCat).length && <tr><td colSpan={4} style={{ color: 'var(--muted)' }}>Sin datos.</td></tr>}</tbody></table></div>
+          <div className="finbox"><div className="csub">Evolución mensual {year || ''} · <span style={{ color: '#3ec46d' }}>ingresos</span> / <span style={{ color: '#e63946' }}>gastos</span></div>{year ? <MonthChart ing={ing} gas={gas} /> : <div className="empty">Elige un año para ver la evolución.</div>}</div>
+        </div>
+        <div className="cars-note" style={{ margin: '14px 0 4px' }}><b>IVA:</b> en cada línea eliges el % (0/4/10/21). El <b>IVA repercutido</b> es el que cobras en tus ingresos; el <b>soportado</b>, el que pagas en gastos. <b>IVA a liquidar = repercutido − soportado</b> (lo que declararías a Hacienda). Si trabajas mucho con facturas exentas o sin IVA, deja 0%.</div>
+        <div className="csub" style={{ marginTop: 10 }}>Movimientos {year && `· ${year}`}</div>
         <div style={{ overflowX: 'auto' }}><table className="nt fintable"><thead><tr><th>Fecha</th><th>Concepto</th><th>Área</th><th>Tipo</th><th>Importe</th><th>IVA %</th><th>Quién</th><th></th></tr></thead><tbody>
           {movList.map(m => <tr key={m.id}>
             <td><input type="date" className="dbinp" value={m.date} onChange={e => updateMovement(m.id, { date: e.target.value })} /></td>
@@ -59,11 +84,12 @@ export default function Finances() {
       </> : <>
         <div className="fincards">
           <div className="fcard"><div className="fl">Anuarios vendidos</div><div className="fv" style={{ color: 'var(--accent)' }}>{anuariosVendidos}</div></div>
-          <div className="fcard"><div className="fl">Ingresos anuario</div><div className="fv" style={{ color: '#3ec46d' }}>{eur(ingAnuario)}</div></div>
-          <div className="fcard"><div className="fl">Ingresos publicidad</div><div className="fv" style={{ color: '#3ec46d' }}>{eur(ingPub)}</div></div>
-          <div className="fcard"><div className="fl">Total ventas</div><div className="fv">{eur(ingAnuario + ingPub)}</div></div>
+          <div className="fcard"><div className="fl">Ingresos anuario</div><div className="fv" style={{ color: '#3ec46d' }}>{eur0(ingAnuario)}</div></div>
+          <div className="fcard"><div className="fl">Ingresos publicidad</div><div className="fv" style={{ color: '#3ec46d' }}>{eur0(ingPub)}</div></div>
+          <div className="fcard"><div className="fl">Total ventas</div><div className="fv">{eur0(ingAnuario + ingPub)}</div></div>
         </div>
-        <div className="csub">Ventas {year && `· ${year}`}</div>
+        <div className="cars-note" style={{ marginTop: 0 }}>Lo que apuntes aquí ya se <b>suma automáticamente</b> a los ingresos y al "Por área" de la pestaña Resumen.</div>
+        <div className="csub" style={{ marginTop: 12 }}>Ventas {year && `· ${year}`}</div>
         <div style={{ overflowX: 'auto' }}><table className="nt fintable"><thead><tr><th>Fecha</th><th>Tipo</th><th>Concepto / cliente</th><th>Uds</th><th>Importe</th><th>IVA %</th><th>Quién</th><th></th></tr></thead><tbody>
           {ventasList.map(s => <tr key={s.id}>
             <td><input type="date" className="dbinp" value={s.date} onChange={e => updateSale(s.id, { date: e.target.value })} /></td>

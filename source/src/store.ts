@@ -133,3 +133,31 @@ export function createFromTemplate(parentId: string | null, key: string, isProje
   const p: Page = { id: uid(), parentId, title: t.title, icon: t.icon, cover: '', blocks: t.blocks.map((b: any) => ({ id: uid(), ...b })), favorite: false, trashed: false, collapsed: false, isProject, order, createdAt: Date.now(), updatedAt: Date.now() };
   db.pages.push(p); emit(); return p;
 }
+
+/* ===== Helpers de cálculo (Inicio / Finanzas / Métricas) ===== */
+export const inRange = (d: string, from: string, to: string) => !!d && (!from || d >= from) && (!to || d <= to);
+export const isSocial = (channel: string) => !/web|analytic|google an/i.test(channel || '');
+export const isFollowerMetric = (m: string) => /segui|suscri|fan|follow/i.test(m || '');
+export const isVisitMetric = (m: string) => /visita|alcance|impres|reach|view|p[aá]gina|lectura|sesi/i.test(m || '');
+
+export function totalFollowers(to: string) {
+  const byCh: Record<string, Metric> = {};
+  db.metrics.forEach(m => { if (isSocial(m.channel) && isFollowerMetric(m.metric) && (!to || m.date <= to)) { const c = byCh[m.channel]; if (!c || m.date > c.date) byCh[m.channel] = m; } });
+  return Object.values(byCh).reduce((s, m) => s + (+m.value || 0), 0);
+}
+export function totalVisits(from: string, to: string, scope: 'social' | 'web') {
+  return db.metrics.filter(m => isVisitMetric(m.metric) && (scope === 'web' ? !isSocial(m.channel) : isSocial(m.channel)) && inRange(m.date, from, to)).reduce((s, m) => s + (+m.value || 0), 0);
+}
+export function financeSummary(from: string, to: string) {
+  const mv = db.finances.filter(m => inRange(m.date, from, to));
+  const sl = db.sales.filter(s => inRange(s.date, from, to));
+  const ingMov = mv.filter(m => m.type === 'ingreso').reduce((s, m) => s + (+m.amount || 0), 0);
+  const gastos = mv.filter(m => m.type === 'gasto').reduce((s, m) => s + (+m.amount || 0), 0);
+  const ingSales = sl.reduce((s, x) => s + (+x.amount || 0), 0);
+  const ingresos = ingMov + ingSales;
+  const ivaRep = mv.filter(m => m.type === 'ingreso').reduce((s, m) => s + (+m.amount || 0) * (+m.iva || 0) / 100, 0)
+    + sl.reduce((s, x) => s + (+x.amount || 0) * (+x.iva || 0) / 100, 0);
+  const ivaSop = mv.filter(m => m.type === 'gasto').reduce((s, m) => s + (+m.amount || 0) * (+m.iva || 0) / 100, 0);
+  const anuarios = sl.filter(s => s.type === 'anuario').reduce((s, x) => s + (+x.units || 0), 0);
+  return { ingresos, gastos, ingMov, ingSales, neto: ingresos - gastos, ivaRep, ivaSop, ivaLiq: ivaRep - ivaSop, anuarios, margen: ingresos ? (ingresos - gastos) / ingresos * 100 : 0 };
+}

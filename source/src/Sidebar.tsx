@@ -41,6 +41,7 @@ export default function Sidebar({ className, view, onOpen, theme, setTheme, onSe
         {nav('📊', 'Métricas', 'metrics')}
         {nav('📣', 'Planner redes', 'planner')}
         {nav('👥', 'Contactos', 'contacts')}
+        {nav('🗄️', 'NAS', 'nas')}
         <button className="sb-btn" onClick={(e) => { e.stopPropagation(); setTpl(t => !t); }}>✏️ Nueva página ▾</button>
         {tpl && <div className="pop" style={{ left: 8, top: 300, width: 230 }} onClick={e => e.stopPropagation()}><div className="pop-list">
           {TEMPLATES.map(t => <div key={t.key} className="pop-item" onClick={() => { setTpl(false); onOpen(createFromTemplate(null, t.key).id); }}><span className="pi-ic">{t.icon}</span><div>{t.label}</div></div>)}

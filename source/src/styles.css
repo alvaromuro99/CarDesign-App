@@ -50,3 +50,33 @@
  body{background:#fff;color:#000}
  .pagelink{color:#000;background:none}
 }
+
+/* ===== Filtro de rango ===== */
+.rangepick{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:4px 0 14px}
+.rangedates{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px}
+/* KPI grids */
+.fincards.k6{grid-template-columns:repeat(6,1fr)}
+.fincards.k5{grid-template-columns:repeat(5,1fr)}
+.fincards.k4{grid-template-columns:repeat(4,1fr)}
+.ksub{font-size:11px;color:var(--muted);margin-top:4px}
+@media(max-width:1100px){.fincards.k6,.fincards.k5{grid-template-columns:repeat(3,1fr)}.fincards.k4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:780px){.fincards.k6,.fincards.k5,.fincards.k4{grid-template-columns:repeat(2,1fr)}}
+/* Evolución mensual */
+.mchart{width:100%;height:auto;margin-top:6px}
+/* Métricas por red */
+.cards-net{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.netcard{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:14px}
+.neth{display:flex;align-items:center;gap:8px;font-size:14px}
+.nicon{font-size:18px}
+.netbig{font-size:28px;font-weight:800;margin:8px 0 2px}
+.netlbl{font-size:12px;font-weight:400;color:var(--muted)}
+.netdelta{font-size:12px;font-weight:600;margin-bottom:6px}
+.netfoot{font-size:12px;color:var(--muted);margin-top:6px}
+.spark{width:100%;height:54px;display:block}
+.sparkempty{font-size:11px;color:var(--muted);padding:14px 0;text-align:center}
+/* NAS */
+.nas-wip{max-width:560px;margin:60px auto;text-align:center;padding:30px;background:var(--bg2);border:1px dashed var(--line);border-radius:16px}
+.nas-ic{font-size:56px}
+.nas-wip h2{margin:10px 0 8px}
+.nas-wip p{color:var(--txt);font-size:14px;line-height:1.6;margin:6px 0}
+.nas-sub{color:var(--muted)!important;font-size:13px!important}

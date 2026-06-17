@@ -8,6 +8,7 @@ import Finances from './Finances';
 import Planner from './Planner';
 import Contacts from './Contacts';
 import Metrics from './Metrics';
+import Nas from './Nas';
 import Dashboard from './Dashboard';
 import Docs from './Docs';
 import Search from './Search';
@@ -32,7 +33,7 @@ export default function App() {
   if (user === undefined) return <div style={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center', color: 'var(--muted)' }}>Cargando…</div>;
   if (user === null) return (<div className="login"><div className="login-card"><h2>CarDesign Workspace</h2><p>Inicia sesión para acceder a tu espacio sincronizado.</p><button className="gbtn" onClick={login}>Entrar con Google</button><p className="err">{status.startsWith('Error') ? status : ''}</p></div></div>);
 
-  const pageExists = !['dashboard', 'board', 'calendar', 'finances', 'planner', 'contacts', 'metrics', 'docs'].includes(view) && getPage(view) && !getPage(view)!.trashed;
+  const pageExists = !['dashboard', 'board', 'calendar', 'finances', 'planner', 'contacts', 'metrics', 'nas', 'docs'].includes(view) && getPage(view) && !getPage(view)!.trashed;
 
   return (
     <div className="app">
@@ -47,6 +48,7 @@ export default function App() {
           : view === 'planner' ? <Planner />
           : view === 'contacts' ? <Contacts />
           : view === 'metrics' ? <Metrics />
+          : view === 'nas' ? <Nas />
           : view === 'docs' ? <Docs />
           : pageExists ? <Editor key={view} pageId={view} onOpen={open} />
           : <div style={{ padding: 60, color: 'var(--muted)' }}>Selecciona una sección.</div>}
