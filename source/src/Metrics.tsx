@@ -17,6 +17,8 @@ function Spark({ pts, color }: { pts: number[]; color: string }) {
 export default function Metrics() {
   const [range, setRange] = useState<Range>(defaultRange());
   const [showTable, setShowTable] = useState(false);
+  const [fCh, setFCh] = useState('');
+  const [fKind, setFKind] = useState('');
   const all = metrics();
   const to = range.to || new Date().toISOString().slice(0, 10);
   const followers = totalFollowers(to);
@@ -24,7 +26,8 @@ export default function Metrics() {
   const vWeb = totalVisits(range.from, range.to, 'web');
   const interactions = all.filter(m => /interac/i.test(m.metric) && inRange(m.date, range.from, range.to)).reduce((s, m) => s + (+m.value || 0), 0);
   const channels = Array.from(new Set(all.map(m => m.channel))).filter(Boolean);
-  const list = all.slice().sort((a, b) => b.date.localeCompare(a.date));
+  const list = all.filter(m => (!fCh || m.channel === fCh) && (!fKind || m.metric === fKind)).slice().sort((a, b) => b.date.localeCompare(a.date));
+  const usedKinds = Array.from(new Set(all.map(m => m.metric))).filter(Boolean);
 
   const card = (label: string, value: string, color: string) => <div className="fcard"><div className="fl">{label}</div><div className="fv" style={{ color }}>{value}</div></div>;
 
@@ -58,7 +61,12 @@ export default function Metrics() {
         }) : <div className="empty">Sin redes registradas todavía.</div>}
       </div>
 
-      <div className="views no-print" style={{ marginTop: 20 }}><button className={showTable ? 'on' : ''} onClick={() => setShowTable(s => !s)}>{showTable ? '▾' : '▸'} Datos / registro manual</button>{showTable && <button className="addtask" onClick={() => addMetric()}>+ Registro</button>}</div>
+      <div className="views no-print" style={{ marginTop: 20, flexWrap: 'wrap' }}><button className={showTable ? 'on' : ''} onClick={() => setShowTable(s => !s)}>{showTable ? '▾' : '▸'} Datos / registro manual</button>{showTable && <>
+        <select className="fsel" value={fCh} onChange={e => setFCh(e.target.value)}><option value="">Todas las redes</option>{channels.map(c => <option key={c} value={c}>{c}</option>)}</select>
+        <select className="fsel" value={fKind} onChange={e => setFKind(e.target.value)}><option value="">Todas las métricas</option>{usedKinds.map(k => <option key={k} value={k}>{k}</option>)}</select>
+        {(fCh || fKind) && <button className="fclear" onClick={() => { setFCh(''); setFKind(''); }}>Limpiar</button>}
+        <span style={{ flex: 1 }} />
+        <button className="addtask" onClick={() => addMetric({ channel: fCh || 'Instagram', metric: fKind || 'Seguidores' })}>+ Registro</button></>}</div>
       {showTable && <div style={{ overflowX: 'auto' }} className="no-print"><table className="nt fintable"><thead><tr><th>Fecha</th><th>Canal</th><th>Métrica</th><th>Valor</th><th></th></tr></thead><tbody>
         {list.map(m => <tr key={m.id}>
           <td><input type="date" className="dbinp" value={m.date} onChange={e => updateMetric(m.id, { date: e.target.value })} /></td>
