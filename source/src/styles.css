@@ -154,3 +154,38 @@
 .pg-dots{color:var(--muted);padding:0 2px;align-self:center}
 .kedit{background:transparent;border:none;border-bottom:1px dashed var(--line);width:100%;font-family:inherit;padding:0 0 2px;outline:none}
 .kedit:focus{border-bottom-color:#7c5cff}
+
+/* ===== Tema oscuro tipo mockup (v4) ===== */
+.dark{--bg:#0b0b11;--bg2:#15151e;--side:#0c0c13;--txt:#ececf4;--muted:#8a8a99;--line:#222230;--hover:#1b1b26;--accent:#7c5cff;--sel:#241f3a;--callout:#15151e}
+body,.app{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif}
+/* layout columna principal + cabecera */
+.maincol{flex:1;display:flex;flex-direction:column;min-width:0;height:100%}
+.maincol .main{flex:1;height:auto;min-height:0}
+.apphdr{display:flex;align-items:center;justify-content:flex-end;gap:10px;height:58px;padding:0 22px;border-bottom:1px solid var(--line);background:var(--bg);flex:none}
+.hsearch{display:flex;align-items:center;gap:8px;width:260px;max-width:38vw;height:38px;padding:0 12px;background:var(--bg2);border:1px solid var(--line);border-radius:11px;color:var(--muted);cursor:pointer;font-size:13px}
+.hsearch:hover{border-color:var(--accent)}
+.hsearch span{flex:1;text-align:left}
+.hsearch kbd{font-family:inherit;font-size:11px;background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--muted)}
+.hicon{position:relative;width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:var(--bg2);border:1px solid var(--line);border-radius:11px;color:var(--muted);cursor:pointer}
+.hicon:hover{color:var(--txt);border-color:var(--accent)}
+.hbadge{position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:#e63946;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.huser{display:flex;align-items:center;gap:9px;padding:4px 10px 4px 4px;border:1px solid var(--line);border-radius:24px;background:var(--bg2);cursor:default}
+.havatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#7c5cff,#4f7cff);color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
+.hu-meta{display:flex;flex-direction:column;line-height:1.15}
+.hu-meta b{font-size:13px}
+.hu-meta span{font-size:11px;color:var(--muted)}
+/* sidebar marca + nav iconos */
+.sb-brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px}
+.brand-logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#7c5cff,#4f7cff);color:#fff;display:flex;align-items:center;justify-content:center}
+.sb-nav{padding:8px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:1px}
+.sb-btn{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:8px 10px;border-radius:9px;color:var(--txt);background:transparent;border:none;cursor:pointer;font-size:14px}
+.sb-btn:hover{background:var(--hover)}
+.sb-btn svg{flex:none;color:var(--muted)}
+.sb-btn.act svg{color:#9b7cff}
+.sb-item .ic svg{vertical-align:middle}
+/* arrastre de proyectos */
+.sb-item.proj{cursor:grab}
+.grip{opacity:0;cursor:grab;color:var(--muted);font-size:12px;margin-right:-2px;letter-spacing:-2px}
+.sb-item.proj:hover .grip{opacity:.6}
+.sb-item.dragging{opacity:.4}
+.sb-item.dragover{box-shadow:inset 0 2px 0 #7c5cff}

@@ -70,6 +70,8 @@ export function movePage(id: string, parentId: string | null) {
   p.parentId = parentId; p.order = childrenOf(parentId).length; p.updatedAt = Date.now(); emit();
 }
 
+export function reorderProjects(orderedIds: string[]) { orderedIds.forEach((id, i) => { const p = getPage(id); if (p) p.order = i; }); emit(); }
+
 /* blocks */
 export function setBlockText(pid: string, bid: string, text: string) { const p = getPage(pid); if (!p) return; const b = p.blocks.find(x => x.id === bid); if (!b) return; b.text = text; p.updatedAt = Date.now(); persist(); }
 export function setBlock(pid: string, bid: string, patch: Partial<Block>) { const p = getPage(pid); if (!p) return; const b = p.blocks.find(x => x.id === bid); if (!b) return; Object.assign(b, patch); p.updatedAt = Date.now(); emit(); }
