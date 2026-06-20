@@ -18,4 +18,4 @@ export interface Contact { id: string; name: string; email: string; phone: strin
 export interface EventItem { id: string; title: string; date: string; color: string; notes: string; }
 export interface Metric { id: string; date: string; channel: string; metric: string; value: number; }
 export interface Sale { id: string; date: string; type: 'anuario'|'publicidad'; concept: string; units: number; amount: number; iva: number; who: string; }
-export interface DB { members: Member[]; pages: Page[]; tasks: Task[]; finances: Movement[]; posts: Post[]; contacts: Contact[]; events: EventItem[]; metrics: Metric[]; sales: Sale[]; }
+export interface DB { members: Member[]; pages: Page[]; tasks: Task[]; finances: Movement[]; posts: Post[]; contacts: Contact[]; events: EventItem[]; metrics: Metric[]; sales: Sale[]; settings?: Record<string, any>; }

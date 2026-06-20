@@ -21,6 +21,7 @@ function ensure(d: any): DB {
   if (!d.members || !d.members.length) d.members = e.members;
   ['pages', 'tasks', 'finances', 'posts', 'contacts', 'events', 'metrics', 'sales'].forEach(k => { if (!Array.isArray(d[k])) d[k] = []; });
   d.finances.forEach((m: any) => { if (m.iva === undefined) m.iva = 0; });
+  if (!d.settings || typeof d.settings !== 'object') d.settings = {};
   return d as DB;
 }
 
@@ -62,6 +63,13 @@ export function moveProject(id: string, dir: -1 | 1) {
   const a = ps[i], b = ps[j]; const ao = a.order; a.order = b.order; b.order = ao; emit();
 }
 
+/* mover una página (suelta o de proyecto) a otro proyecto o a la raíz */
+export function movePage(id: string, parentId: string | null) {
+  const p = getPage(id); if (!p) return;
+  if (id === parentId) return;
+  p.parentId = parentId; p.order = childrenOf(parentId).length; p.updatedAt = Date.now(); emit();
+}
+
 /* blocks */
 export function setBlockText(pid: string, bid: string, text: string) { const p = getPage(pid); if (!p) return; const b = p.blocks.find(x => x.id === bid); if (!b) return; b.text = text; p.updatedAt = Date.now(); persist(); }
 export function setBlock(pid: string, bid: string, patch: Partial<Block>) { const p = getPage(pid); if (!p) return; const b = p.blocks.find(x => x.id === bid); if (!b) return; Object.assign(b, patch); p.updatedAt = Date.now(); emit(); }
@@ -85,6 +93,10 @@ export const finances = () => db.finances;
 export function addMovement(m?: Partial<Movement>): Movement { const mv: Movement = { id: uid(), date: new Date().toISOString().slice(0, 10), concept: '', category: 'General', type: 'ingreso', amount: 0, iva: 0, who: 'empresa', ...m }; db.finances.unshift(mv); emit(); return mv; }
 export function updateMovement(id: string, patch: Partial<Movement>) { const m = db.finances.find(x => x.id === id); if (!m) return; Object.assign(m, patch); emit(); }
 export function deleteMovement(id: string) { db.finances = db.finances.filter(x => x.id !== id); emit(); }
+
+/* ajustes persistentes (p. ej. anuarios impresos) */
+export const getSetting = (k: string, def?: any) => (db.settings && db.settings[k] !== undefined) ? db.settings[k] : def;
+export function setSetting(k: string, v: any) { if (!db.settings) db.settings = {}; db.settings[k] = v; emit(); }
 
 /* ventas (anuario + publicidad) */
 export const sales = () => db.sales;
