@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, User } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc, onSnapshot, Firestore, DocumentReference } from 'firebase/firestore';
-import { getDB, setDB, subscribe, isApplyingRemote, uid } from './store';
+import { getDB, setDB, subscribe, isApplyingRemote, uid, loadGithubMetrics, loadGithubContacts } from './store';
 
 const config = {
   apiKey: 'AIzaSyAmCwiGLTuyQ7jYEJTTThJvuD9Nx8SYcGU',
@@ -38,6 +38,8 @@ async function start() {
   try { const snap = await getDoc(docRef); if (snap.exists() && (snap.data() as any).data) setDB(JSON.parse((snap.data() as any).data), true); else pushNow(); } catch (e) { }
   onSnapshot(docRef, (s) => { if (!s.exists()) return; const d = s.data() as any; if (d && d.data && d.updatedByClient !== clientId) setDB(JSON.parse(d.data), true); });
   subscribe(() => { if (!isApplyingRemote()) schedulePush(); });
+  loadGithubMetrics();
+  loadGithubContacts();
 }
 let timer: any;
 function schedulePush() { clearTimeout(timer); timer = setTimeout(pushNow, 700); }

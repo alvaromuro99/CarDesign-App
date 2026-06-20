@@ -142,11 +142,11 @@ export const isVisitMetric = (m: string) => /visita|alcance|impres|reach|view|p[
 
 export function totalFollowers(to: string) {
   const byCh: Record<string, Metric> = {};
-  db.metrics.forEach(m => { if (isSocial(m.channel) && isFollowerMetric(m.metric) && (!to || m.date <= to)) { const c = byCh[m.channel]; if (!c || m.date > c.date) byCh[m.channel] = m; } });
+  allMetrics().forEach(m => { if (isSocial(m.channel) && isFollowerMetric(m.metric) && (!to || m.date <= to)) { const c = byCh[m.channel]; if (!c || m.date > c.date) byCh[m.channel] = m; } });
   return Object.values(byCh).reduce((s, m) => s + (+m.value || 0), 0);
 }
 export function totalVisits(from: string, to: string, scope: 'social' | 'web') {
-  return db.metrics.filter(m => isVisitMetric(m.metric) && (scope === 'web' ? !isSocial(m.channel) : isSocial(m.channel)) && inRange(m.date, from, to)).reduce((s, m) => s + (+m.value || 0), 0);
+  return sumCat('views', from, to, scope === 'social');
 }
 export function financeSummary(from: string, to: string) {
   const mv = db.finances.filter(m => inRange(m.date, from, to));
@@ -160,4 +160,71 @@ export function financeSummary(from: string, to: string) {
   const ivaSop = mv.filter(m => m.type === 'gasto').reduce((s, m) => s + (+m.amount || 0) * (+m.iva || 0) / 100, 0);
   const anuarios = sl.filter(s => s.type === 'anuario').reduce((s, x) => s + (+x.units || 0), 0);
   return { ingresos, gastos, ingMov, ingSales, neto: ingresos - gastos, ivaRep, ivaSop, ivaLiq: ivaRep - ivaSop, anuarios, margen: ingresos ? (ingresos - gastos) / ingresos * 100 : 0 };
+}
+
+
+/* ===== Métricas y contactos desde CSV en GitHub (solo lectura, no tocan Firestore) ===== */
+let extraMetrics: Metric[] = [];
+export const allMetrics = (): Metric[] => extraMetrics.length ? db.metrics.concat(extraMetrics) : db.metrics;
+export async function loadGithubMetrics() {
+  try {
+    const base = (import.meta as any).env.BASE_URL || '/';
+    const res = await fetch(base + 'metricas/index.json?t=' + Date.now());
+    if (!res.ok) return;
+    const manifest: any[] = await res.json();
+    const recs: Metric[] = [];
+    await Promise.all(manifest.map(async (it) => {
+      try {
+        const r = await fetch(base + 'metricas/' + it.file + '?t=' + Date.now());
+        if (!r.ok) return;
+        (await r.text()).split('\n').forEach(l => { const m = l.match(/^(\d{4}-\d{2}-\d{2}),(-?\d+(?:\.\d+)?)/); if (m) recs.push({ id: 'csv', date: m[1], channel: it.channel, metric: it.metric, value: +m[2] }); });
+      } catch { }
+    }));
+    extraMetrics = recs; subs.forEach(f => f());
+  } catch { }
+}
+const CATS: Record<string, string> = { 'Visualizaciones': 'views', 'Visitas': 'views', 'Vistas': 'views', 'Alcance': 'reach', 'Espectadores': 'reach', 'Interacciones': 'engage', 'Clics en el enlace': 'clicks', 'Clics': 'clicks' };
+export const catOf = (m: string) => CATS[m] || '';
+export function sumCat(cat: string, from: string, to: string, social = true) {
+  return allMetrics().filter(m => catOf(m.metric) === cat && (social ? isSocial(m.channel) : !isSocial(m.channel)) && inRange(m.date, from, to)).reduce((s, m) => s + (+m.value || 0), 0);
+}
+export function metricSeries(channel: string, cat: string, from: string, to: string): { date: string; value: number }[] {
+  const by: Record<string, number> = {};
+  allMetrics().forEach(m => { if (m.channel === channel && catOf(m.metric) === cat && inRange(m.date, from, to)) by[m.date] = (by[m.date] || 0) + (+m.value || 0); });
+  return Object.keys(by).sort().map(d => ({ date: d, value: by[d] }));
+}
+export function webSeries(metric: string, from: string, to: string): { date: string; value: number }[] {
+  return allMetrics().filter(m => m.channel === 'Web' && m.metric === metric && inRange(m.date, from, to)).sort((a, b) => a.date.localeCompare(b.date)).map(m => ({ date: m.date, value: +m.value || 0 }));
+}
+export const webSum = (metric: string, from: string, to: string) => webSeries(metric, from, to).reduce((s, p) => s + p.value, 0);
+export const webAvg = (metric: string, from: string, to: string) => { const s = webSeries(metric, from, to); return s.length ? s.reduce((a, p) => a + p.value, 0) / s.length : 0; };
+
+let extraContacts: Contact[] = [];
+export const allContacts = (): Contact[] => extraContacts.length ? db.contacts.concat(extraContacts) : db.contacts;
+function parseCsvLine(line: string): string[] { const out: string[] = []; let cur = '', q = false; for (let i = 0; i < line.length; i++) { const c = line[i]; if (q) { if (c === '"') { if (line[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += c; } else { if (c === '"') q = true; else if (c === ',') { out.push(cur); cur = ''; } else cur += c; } } out.push(cur); return out; }
+export async function loadGithubContacts() {
+  try {
+    const base = (import.meta as any).env.BASE_URL || '/';
+    const res = await fetch(base + 'contactos/contactos.csv?t=' + Date.now());
+    if (!res.ok) return;
+    const text = (await res.text()).replace(/\r/g, '');
+    const lines = text.split('\n').filter(l => l.length);
+    if (lines.length < 2) return;
+    const recs: Contact[] = [];
+    for (let i = 1; i < lines.length; i++) {
+      const c = parseCsvLine(lines[i]);
+      if (!c.length || !(c[0] || c[3] || c[5])) continue;
+      recs.push({ id: 'csv' + i, name: c[0] || '', company: c[1] || '', role: c[2] || '', email: c[3] || '', emailAlt: c[4] || '', phone: c[5] || '', clase: c[6] || '', industria: c[7] || '', interes: c[8] || '', estado: c[9] || '', notes: c[11] || '', fuentes: c[12] || '', status: '', ro: true });
+    }
+    extraContacts = recs; subs.forEach(f => f());
+  } catch { }
+}
+/* rango anterior equivalente (misma duración, justo antes) para comparar tendencias */
+export function prevRange(from: string, to: string): { from: string; to: string } {
+  if (!from || !to) return { from: '', to: '' };
+  const a = new Date(from), b = new Date(to);
+  const days = Math.round((b.getTime() - a.getTime()) / 864e5) + 1;
+  const pb = new Date(a.getTime() - 864e5);
+  const pa = new Date(pb.getTime() - (days - 1) * 864e5);
+  return { from: pa.toISOString().slice(0, 10), to: pb.toISOString().slice(0, 10) };
 }

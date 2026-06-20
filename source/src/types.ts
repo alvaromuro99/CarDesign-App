@@ -14,7 +14,7 @@ export interface Task { id: string; projectId: string; title: string; status: St
 export type PostStatus = 'idea'|'guion'|'grabado'|'editado'|'publicado';
 export interface Post { id: string; title: string; platform: string; status: PostStatus; date: string; assignee: string; notes: string; order: number; }
 export interface Movement { id: string; date: string; concept: string; category: string; type: 'ingreso'|'gasto'; amount: number; iva: number; who: string; notes?: string; }
-export interface Contact { id: string; name: string; email: string; phone: string; company: string; role: string; status: string; notes: string; }
+export interface Contact { id: string; name: string; email: string; phone: string; company: string; role: string; status: string; notes: string; emailAlt?: string; clase?: string; industria?: string; interes?: string; estado?: string; fuentes?: string; ro?: boolean; }
 export interface EventItem { id: string; title: string; date: string; color: string; notes: string; }
 export interface Metric { id: string; date: string; channel: string; metric: string; value: number; }
 export interface Sale { id: string; date: string; type: 'anuario'|'publicidad'; concept: string; units: number; amount: number; iva: number; who: string; }
