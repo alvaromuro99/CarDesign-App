@@ -14,8 +14,17 @@
     "19edbf73ca9c307c",
     "19edbc23ec16a1ab",
     "19edb620e688b7f4",
-    "19edaf326dc1f0e7"
+    "19edaf326dc1f0e7",
+    "19ee955df1518a73",
+    "19ee6880120b67d7",
+    "19ed0e6431a087f2",
+    "19ecfc31c9e33eda",
+    "19ecf76ac5407509",
+    "19eda9d2eb63db16",
+    "19ed9c00309189e0"
   ],
   "firmas_done": false,
-  "verify_index": 12
+  "verify_index": 24,
+  "dedup_index": 0,
+  "fill_index": 0
 }
