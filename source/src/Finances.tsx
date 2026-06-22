@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { finances, addMovement, updateMovement, deleteMovement, projects, members, member, sales, addSale, updateSale, deleteSale, financeSummary, getSetting, setSetting } from './store';
+import Icon from './icons';
 const eur = (n: number) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(n || 0);
 const eur0 = (n: number) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n || 0);
 const whoLabel = (w: string) => w === 'empresa' ? 'Revista (empresa)' : (member(w)?.name || w);
@@ -36,6 +37,7 @@ function Pager({ page, pages, total, from, to, setPage, onExport }: { page: numb
 
 export default function Finances() {
   const [tab, setTab] = useState<'mov' | 'ventas'>('mov');
+  const [grpBy, setGrpBy] = useState<'area' | 'persona'>('area');
   const all = finances();
   const years = Array.from(new Set([...all.map(m => (m.date || '').slice(0, 4)), ...sales().map(s => (s.date || '').slice(0, 4))].filter(Boolean))).sort().reverse();
   const [year, setYear] = useState<string>(years[0] || String(new Date().getFullYear()));
@@ -49,9 +51,11 @@ export default function Finances() {
   const movList = all.filter(m => !year || (m.date || '').slice(0, 4) === year).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
   const ventasList = sales().filter(s => !year || (s.date || '').slice(0, 4) === year).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 
-  const byCat: Record<string, { i: number; g: number }> = {};
-  movList.forEach(m => { (byCat[m.category || 'General'] = byCat[m.category || 'General'] || { i: 0, g: 0 })[m.type === 'ingreso' ? 'i' : 'g'] += (+m.amount || 0); });
-  ventasList.forEach(s => { const k = s.type === 'anuario' ? 'Venta anuarios' : 'Publicidad'; (byCat[k] = byCat[k] || { i: 0, g: 0 }).i += (+s.amount || 0); });
+  const byGrp: Record<string, { i: number; g: number }> = {};
+  const keyMov = (m: any) => grpBy === 'area' ? (m.category || 'General') : whoLabel(m.who);
+  const keySale = (s: any) => grpBy === 'area' ? (s.type === 'anuario' ? 'Venta anuarios' : 'Publicidad') : whoLabel(s.who);
+  movList.forEach(m => { (byGrp[keyMov(m)] = byGrp[keyMov(m)] || { i: 0, g: 0 })[m.type === 'ingreso' ? 'i' : 'g'] += (+m.amount || 0); });
+  ventasList.forEach(s => { (byGrp[keySale(s)] = byGrp[keySale(s)] || { i: 0, g: 0 }).i += (+s.amount || 0); });
 
   const ing = Array(12).fill(0), gas = Array(12).fill(0);
   if (year) { movList.forEach(m => { const mo = +(m.date || '').slice(5, 7) - 1; if (mo >= 0) (m.type === 'ingreso' ? ing : gas)[mo] += (+m.amount || 0); });
@@ -63,9 +67,13 @@ export default function Finances() {
   const impresosKey = 'anuariosImpresos' + (year || 'all');
   const impresos = +getSetting(impresosKey, 0);
 
-  const tr = (cur: number, prev: number | undefined, good = true) => { if (sumP == null || prev == null) return null; const d = cur - prev, pct = prev ? Math.round(d / Math.abs(prev) * 100) : 100; const ok = (d >= 0) === good; return <div className="ktrend" style={{ color: ok ? '#3ec46d' : '#e63946', fontSize: 12 }}>{d >= 0 ? '↑' : '↓'} {Math.abs(pct)}% <span className="kt-sub">vs año anterior</span></div>; };
-  const trPP = (cur: number, prev: number | undefined) => { if (sumP == null || prev == null) return null; const d = cur - prev; return <div className="ktrend" style={{ color: d >= 0 ? '#3ec46d' : '#e63946', fontSize: 12 }}>{d >= 0 ? '↑' : '↓'} {Math.abs(d).toFixed(1)} pp <span className="kt-sub">vs año anterior</span></div>; };
-  const kcard = (label: string, value: string, color: string, foot: React.ReactNode) => <div className="kcard"><div className="klabel">{label}</div><div className="kval" style={{ color }}>{value}</div><div className="kfoot">{foot}</div></div>;
+  const tr = (cur: number, prev: number | undefined, good = true) => { if (sumP == null || prev == null) return null; const d = cur - prev, pct = prev ? Math.round(d / Math.abs(prev) * 100) : 100; const ok = (d >= 0) === good; return <span className="ktrend" style={{ color: ok ? '#3ec46d' : '#e63946' }}>{d >= 0 ? '↑' : '↓'} {Math.abs(pct)}% <span className="kt-sub">vs año ant.</span></span>; };
+  const trPP = (cur: number, prev: number | undefined) => { if (sumP == null || prev == null) return null; const d = cur - prev; return <span className="ktrend" style={{ color: d >= 0 ? '#3ec46d' : '#e63946' }}>{d >= 0 ? '↑' : '↓'} {Math.abs(d).toFixed(1)} pp <span className="kt-sub">vs año ant.</span></span>; };
+  const kc = (icon: string, chipBg: string, color: string, label: string, value: string, valColor: string, foot: React.ReactNode) => (
+    <div className="kcard kcard-h">
+      <span className="kchip" style={{ background: chipBg, color }}><Icon n={icon} size={22} /></span>
+      <div className="kright"><span className="klabel">{label}</span><div className="kval" style={{ color: valColor }}>{value}</div><div className="kfoot">{foot}</div></div>
+    </div>);
 
   const pages = Math.max(1, Math.ceil(movList.length / PS));
   const pg = Math.min(page, pages);
@@ -84,15 +92,15 @@ export default function Finances() {
       </div>
 
       {tab === 'mov' ? <>
-        <div className="kpi6" style={{ gridTemplateColumns: 'repeat(5,1fr)' }}>
-          {kcard('Ingresos', eur0(sum.ingresos), '#3ec46d', tr(sum.ingresos, sumP?.ingresos, true) || <span className="kt-sub">incl. ventas anuario</span>)}
-          {kcard('Gastos', eur0(sum.gastos), '#e63946', tr(sum.gastos, sumP?.gastos, false))}
-          {kcard('Beneficio', eur0(sum.neto), sum.neto >= 0 ? '#3ec46d' : '#e63946', tr(sum.neto, sumP?.neto, true))}
-          {kcard('Margen', sum.margen.toFixed(0) + '%', 'var(--txt)', trPP(sum.margen, sumP?.margen))}
-          {kcard('IVA a liquidar', eur0(sum.ivaLiq), 'var(--txt)', <span className="kt-sub">{eur0(sum.ivaRep)} rep − {eur0(sum.ivaSop)} sop</span>)}
+        <div className="kpi6 k5">
+          {kc('wallet', 'rgba(62,196,109,.16)', '#3ec46d', 'Ingresos', eur0(sum.ingresos), '#3ec46d', tr(sum.ingresos, sumP?.ingresos, true) || <span className="kt-sub">incl. ventas anuario</span>)}
+          {kc('wallet', 'rgba(230,57,70,.16)', '#e63946', 'Gastos', eur0(sum.gastos), '#e63946', tr(sum.gastos, sumP?.gastos, false))}
+          {kc('trending', 'rgba(62,196,109,.16)', '#3ec46d', 'Beneficio', eur0(sum.neto), sum.neto >= 0 ? '#3ec46d' : '#e63946', tr(sum.neto, sumP?.neto, true))}
+          {kc('chart', 'rgba(155,93,229,.16)', '#9b5de5', 'Margen', sum.margen.toFixed(0) + '%', 'var(--txt)', trPP(sum.margen, sumP?.margen))}
+          {kc('file', 'rgba(244,166,35,.16)', '#f4a623', 'IVA a liquidar', eur0(sum.ivaLiq), 'var(--txt)', <span className="kt-sub">{eur0(sum.ivaRep)} rep − {eur0(sum.ivaSop)} sop</span>)}
         </div>
-        <div className="finrow3" style={{ gridTemplateColumns: '1fr 1.2fr' }}>
-          <div className="dbox"><div className="dbox-h">Por área (incluye ventas)</div><table className="nt"><tbody><tr><th>Área</th><th>Ingresos</th><th>Gastos</th><th>Neto</th></tr>{Object.keys(byCat).sort().map(k => <tr key={k}><td>{k}</td><td style={{ color: '#3ec46d' }}>{eur0(byCat[k].i)}</td><td style={{ color: '#e63946' }}>{eur0(byCat[k].g)}</td><td><b>{eur0(byCat[k].i - byCat[k].g)}</b></td></tr>)}{!Object.keys(byCat).length && <tr><td colSpan={4} style={{ color: 'var(--muted)' }}>Sin datos.</td></tr>}</tbody></table></div>
+        <div className="finrow3 frow2">
+          <div className="dbox"><div className="dbox-h" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}><span>Por {grpBy === 'area' ? 'área' : 'persona'} (incluye ventas)</span><span className="seg"><button className={grpBy === 'area' ? 'on' : ''} onClick={() => setGrpBy('area')}>Área</button><button className={grpBy === 'persona' ? 'on' : ''} onClick={() => setGrpBy('persona')}>Persona</button></span></div><table className="nt"><tbody><tr><th>{grpBy === 'area' ? 'Área' : 'Persona'}</th><th>Ingresos</th><th>Gastos</th><th>Neto</th></tr>{Object.keys(byGrp).sort().map(k => <tr key={k}><td>{k}</td><td style={{ color: '#3ec46d' }}>{eur0(byGrp[k].i)}</td><td style={{ color: '#e63946' }}>{eur0(byGrp[k].g)}</td><td><b>{eur0(byGrp[k].i - byGrp[k].g)}</b></td></tr>)}{!Object.keys(byGrp).length && <tr><td colSpan={4} style={{ color: 'var(--muted)' }}>Sin datos.</td></tr>}</tbody></table></div>
           <div className="dbox"><div className="dbox-h">Evolución mensual {year || ''} · <span style={{ color: '#3ec46d' }}>ingresos</span> / <span style={{ color: '#e63946' }}>gastos</span></div>{year ? <MonthChart ing={ing} gas={gas} /> : <div className="empty">Elige un año para ver la evolución.</div>}</div>
         </div>
         <div className="cars-note" style={{ margin: '14px 0 4px' }}><b>IVA:</b> en cada línea eliges el % (0/4/10/21). El <b>IVA repercutido</b> es el que cobras en tus ingresos; el <b>soportado</b>, el que pagas en gastos. <b>IVA a liquidar = repercutido − soportado</b>.</div>
@@ -112,12 +120,12 @@ export default function Finances() {
         <Pager page={pg} pages={pages} total={movList.length} from={movList.length ? (pg - 1) * PS + 1 : 0} to={Math.min(pg * PS, movList.length)} setPage={setPage} onExport={exportMov} />
         <datalist id="fc">{Array.from(new Set([...projects().map(p => p.title), 'General', ...all.map(m => m.category)])).filter(Boolean).map(c => <option key={c} value={c} />)}</datalist>
       </> : <>
-        <div className="kpi6" style={{ gridTemplateColumns: 'repeat(5,1fr)' }}>
-          <div className="kcard"><div className="klabel">📘 Anuarios impresos</div><input className="kval kedit" type="number" value={impresos || ''} placeholder="0" onChange={e => setSetting(impresosKey, +e.target.value)} /><div className="kfoot"><span className="kt-sub">tirada de este año</span></div></div>
-          {kcard('Vendidos / entregados', String(anuariosVendidos), 'var(--accent)', <span className="kt-sub">de {impresos || '—'} impresos</span>)}
-          {kcard('Stock restante', String(Math.max(0, impresos - anuariosVendidos)), impresos - anuariosVendidos <= 0 ? '#e63946' : '#3ec46d', <span className="kt-sub">{impresos ? Math.round(anuariosVendidos / impresos * 100) + '% colocado' : 'indica la tirada'}</span>)}
-          {kcard('Ingresos anuario', eur0(ingAnuario), '#3ec46d', null)}
-          {kcard('Ingresos publicidad', eur0(ingPub), '#3ec46d', <span className="kt-sub">Total ventas {eur0(ingAnuario + ingPub)}</span>)}
+        <div className="kpi6 k5">
+          <div className="kcard kcard-h"><span className="kchip" style={{ background: 'rgba(79,124,255,.16)', color: '#4f7cff' }}><Icon n="file" size={22} /></span><div className="kright"><span className="klabel">Anuarios impresos</span><input className="kval kedit" type="number" value={impresos || ''} placeholder="0" onChange={e => setSetting(impresosKey, +e.target.value)} /><div className="kfoot"><span className="kt-sub">tirada de este año</span></div></div></div>
+          {kc('check', 'rgba(155,93,229,.16)', '#9b5de5', 'Vendidos / entregados', String(anuariosVendidos), 'var(--accent)', <span className="kt-sub">de {impresos || '—'} impresos</span>)}
+          {kc('board', 'rgba(62,196,109,.16)', '#3ec46d', 'Stock restante', String(Math.max(0, impresos - anuariosVendidos)), impresos - anuariosVendidos <= 0 ? '#e63946' : '#3ec46d', <span className="kt-sub">{impresos ? Math.round(anuariosVendidos / impresos * 100) + '% colocado' : 'indica la tirada'}</span>)}
+          {kc('wallet', 'rgba(62,196,109,.16)', '#3ec46d', 'Ingresos anuario', eur0(ingAnuario), '#3ec46d', <span className="kt-sub">{anuariosVendidos} uds</span>)}
+          {kc('megaphone', 'rgba(244,166,35,.16)', '#f4a623', 'Ingresos publicidad', eur0(ingPub), '#3ec46d', <span className="kt-sub">Total ventas {eur0(ingAnuario + ingPub)}</span>)}
         </div>
         <div className="cars-note" style={{ marginTop: 0 }}>Apunta cada anuario vendido o publicidad abajo: se <b>suma automáticamente</b> a los ingresos y al “Por área”. Escribe arriba la <b>tirada impresa</b> para ver el stock restante.</div>
         <div className="csub" style={{ marginTop: 12 }}>Ventas {year && `· ${year}`}</div>
