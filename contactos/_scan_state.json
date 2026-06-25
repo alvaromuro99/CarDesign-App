@@ -203,14 +203,15 @@
   "19ef0d4ed316c494"
  ],
  "firmas_done": false,
- "verify_index": 45,
+ "verify_index": 48,
  "dedup_index": 0,
- "fill_index": 117,
+ "fill_index": 305,
  "rounds_log": [
   "R1 jun25: T2 13 activos/4 sinconf; T3 0 dups; T4 0 (Touring/Mondragon sin contacto nominal)",
   "R2 jun25: T2 8 activos/1 sinconf (Jordá,Christine GZ,Turiel,Collado,Zuazo,Gómara,Josep Rodríguez,Graziani); T3 0; T4 1 (Yokohama: María de Montero Fontán)",
   "R3 jun25: T2 7 activos/2 sinconf (Tapie,Alía,Nuria de Andrés DGT,Mª Nisa,Cumellas,J.A.Martínez AMOC,Coronado); T3 0; T4 1 (Yucatan: Caroline Prince)",
   "R4 jun25: T2 5 activos/1 sinconf (Raffaella Perrone IED,Raúl Morales Faconauto,Tania Puche Ganvam,Michele Albera IED,Raúl Aranda FEVA); T3 0; T4 0 (rows 3-107 son info@ genericos sin contacto nominal)",
-  "R5 jun25: T2 3 activos/1 sinconf (Miguel Sánchez La Escudería,Diego Duque de Quevedo DP Luxe,Caroline Prince Yucatan; Álvaro Fontes sin confirmar); T3 0; T4 0 (Bertone sin contacto nominal)"
+  "R5 jun25: T2 3 activos/1 sinconf (Miguel Sánchez La Escudería,Diego Duque de Quevedo DP Luxe,Caroline Prince Yucatan; Álvaro Fontes sin confirmar); T3 0; T4 0 (Bertone sin contacto nominal)",
+  "R6 jun25: T2 2 activos/1 sinconf (J.F.Blanco Jarama-RACE,Felix Buget Maserati Club; Juan Tapia sin confirmar); T3 0; T4 0 (Dirty Line es foundry tipografica, no auto)"
  ]
 }
