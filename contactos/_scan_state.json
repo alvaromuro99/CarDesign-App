@@ -203,9 +203,9 @@
   "19ef0d4ed316c494"
  ],
  "firmas_done": false,
- "verify_index": 690,
+ "verify_index": 880,
  "dedup_index": 0,
- "fill_index": 909,
+ "fill_index": 1010,
  "rounds_log": [
   "R1 jun25: T2 13 activos/4 sinconf; T3 0 dups; T4 0 (Touring/Mondragon sin contacto nominal)",
   "R2 jun25: T2 8 activos/1 sinconf (Jordá,Christine GZ,Turiel,Collado,Zuazo,Gómara,Josep Rodríguez,Graziani); T3 0; T4 1 (Yokohama: María de Montero Fontán)",
@@ -219,6 +219,7 @@
   "R4 jun25-noche: T2 6 activos (Hector Ares Goodyear+email/tel, Juan Carlos Moyano Hankook, Raul Gutierrez Hankook->dir ventas&mkt, Alec Wyman Hennessey->VP, Michael Harley Hennessey, David Herranz Iberian Classic Raid)/2 sinconf (Javier Fdez GT Corsa, Fatima Moreno Honor); 1 BORRADO (Jacobo Ruiz dejó Goodyear->Innotec); T3 0; T4 1 (Kia: Diego Abeledo)",
   "R5 jun25-noche: T2 7 activos (Laura Torrejon IDC, Hector Alvarez Autopia, Isaac Tutumlu, Sonia Navarro IVECO, Jaime Alguersuari->ex-piloto/DJ, Manuel Perez Casado Jeep, Claudio Lara Lamborghini Wines)/1 sinconf (Alberto Yanez Karbium); 1 BORRADO (Jessica Fuentes dejó Kimoa->SCOPEN); T3 0; T4 1 (RM Sothebys: Ethan Gibson)",
   "R6 jun25-noche: T2 6 activos (Juan Carlos Fuster Lenovo, Moncho Veloso Linea Directa->com.externa, Lucas Cruz copiloto Sainz, Enrique Ramallo Magna Supercars CEO, Paco Garrido Liebana Mapfre patrocinios, Sergi Francoli Marina Racewear->sales mgr); T3 0; T4 0 (mi relleno R5 de Ethan Gibson resultó dup de ficha existente); T3 1 FUSIÓN (Ethan Gibson RM Sothebys: borrada redundante 888, rol movido a ficha verificada)",
-  "R7 jun25-noche: T2 5 activos (Marta García López GT, Hugo Ureta Michelin+email, Mónica Rius Aymamí Michelin directora, Nerea Martí, Laura Crespo Michelin->com.comercial)/1 sinconf (Sonia Portolés Michelin); T3 0; T4 0 (Xpeng/Vitamina C sin contacto nominal fiable)"
+  "R7 jun25-noche: T2 5 activos (Marta García López GT, Hugo Ureta Michelin+email, Mónica Rius Aymamí Michelin directora, Nerea Martí, Laura Crespo Michelin->com.comercial)/1 sinconf (Sonia Portolés Michelin); T3 0; T4 0 (Xpeng/Vitamina C sin contacto nominal fiable)",
+  "R8 jun25-noche: T2 3 activos (Diego de Azúa RACE, Laura Martín González RFEDA+email, María de Montero Fontán Yokohama)/2 sinconf (Oscar Pollo Morgan, Jordi Gold); 1 BORRADO (Alicia Vicente dejó PcComponentes->Èggo Cocinas); T3 0; T4 1 (Time Out Madrid: Marta Bac)"
  ]
 }
