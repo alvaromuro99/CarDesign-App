@@ -231,9 +231,9 @@
   "19ecc6dea4a82a17"
  ],
  "firmas_done": false,
- "verify_index": 413,
+ "verify_index": 519,
  "dedup_index": 0,
- "fill_index": 485,
+ "fill_index": 886,
  "rounds_log": [
   "R1 jun25: T2 13 activos/4 sinconf; T3 0 dups; T4 0 (Touring/Mondragon sin contacto nominal)",
   "R2 jun25: T2 8 activos/1 sinconf (Jordá,Christine GZ,Turiel,Collado,Zuazo,Gómara,Josep Rodríguez,Graziani); T3 0; T4 1 (Yokohama: María de Montero Fontán)",
@@ -250,6 +250,7 @@
   "R7 jun25-noche: T2 5 activos (Marta García López GT, Hugo Ureta Michelin+email, Mónica Rius Aymamí Michelin directora, Nerea Martí, Laura Crespo Michelin->com.comercial)/1 sinconf (Sonia Portolés Michelin); T3 0; T4 0 (Xpeng/Vitamina C sin contacto nominal fiable)",
   "R8 jun25-noche: T2 3 activos (Diego de Azúa RACE, Laura Martín González RFEDA+email, María de Montero Fontán Yokohama)/2 sinconf (Oscar Pollo Morgan, Jordi Gold); 1 BORRADO (Alicia Vicente dejó PcComponentes->Èggo Cocinas); T3 0; T4 1 (Time Out Madrid: Marta Bac)",
   "T1 jun25-noche: minados 3 contactos reales: Álvaro Salvador (Fever, On site Content Director), Cláudio Delicado (Liqui Moly Iberia, Head Strategic Comm&Mkt +tel), Sara Rabassi (MIMO Milano Monza, press@milanomonza.com NUEVA). Borrado duplicado inferido Cision de Delicado. +28 hilos procesados.",
-  "R1b jun25-noche (wrap a 0): T2 4 activos (Julie Scott FrankStephenson, Isabel García-Frontera FreeNow DG, Lorena Pastorino Fever, Álvaro Fontes Ascari)/1 sinconf (Maria Santesteban Fever); 1 BORRADO (Diego Galindo dejó DriiveMe->Vertix); T3 0; T4 0 (wrap fill a 0; Bertone/Rosso Corsa sin contacto nominal); fichas vacías restantes son emails genéricos de marca"
+  "R1b jun25-noche (wrap a 0): T2 4 activos (Julie Scott FrankStephenson, Isabel García-Frontera FreeNow DG, Lorena Pastorino Fever, Álvaro Fontes Ascari)/1 sinconf (Maria Santesteban Fever); 1 BORRADO (Diego Galindo dejó DriiveMe->Vertix); T3 0; T4 0 (wrap fill a 0; Bertone/Rosso Corsa sin contacto nominal); fichas vacías restantes son emails genéricos de marca",
+  "R2b jun25-noche: T2 3 activos (Nuria Presa Agüero Honor, Jon Visscher Hennessey/Vcomm, Miguel Sesé Hankook)/2 sinconf (Ana Ruiz Galp, Rian Ordóñez Huawei); 1 reubicado (Javier Martínez ex-Hawkers->motorsport); T3 0; T4 1 (RM Sothebys EMEA: Peter Haynes)"
  ]
 }
