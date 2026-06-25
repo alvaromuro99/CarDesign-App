@@ -203,9 +203,9 @@
   "19ef0d4ed316c494"
  ],
  "firmas_done": false,
- "verify_index": 456,
+ "verify_index": 511,
  "dedup_index": 0,
- "fill_index": 529,
+ "fill_index": 558,
  "rounds_log": [
   "R1 jun25: T2 13 activos/4 sinconf; T3 0 dups; T4 0 (Touring/Mondragon sin contacto nominal)",
   "R2 jun25: T2 8 activos/1 sinconf (Jordá,Christine GZ,Turiel,Collado,Zuazo,Gómara,Josep Rodríguez,Graziani); T3 0; T4 1 (Yokohama: María de Montero Fontán)",
@@ -215,6 +215,7 @@
   "R6 jun25: T2 2 activos/1 sinconf (J.F.Blanco Jarama-RACE,Felix Buget Maserati Club; Juan Tapia sin confirmar); T3 0; T4 0 (Dirty Line es foundry tipografica, no auto)",
   "R1 jun25-noche: T2 14 activos/7 sinconf (Jonathan Lopez FirstStop,Bigot,JulioFernandez Alfa,Angy Izquierdo Hyundai,Pedro Lara Lancia,Eduardo Duran Evo,EduardoMartinez RACVN,SergioOrgaz Traced,JoseAlfredoAlvarez Veteran,TimBakker,Cunild,NanaGomez,JavierRucabado AutoStorica); T3 0 dups; T4 1 (Fuoriconcorso: Emanuele Bedetti)",
   "R2 jun25-noche: T2 16 activos/2 sinconf (DriiveMe Constantin Lambert+García-Comas,Morcillo E2P,Alejandra Fdez EVO Banco,Mtnez de Tejada F4, +federaciones Andaluza/Asturiana/Balear/CastillaLM/CyL/Extremena/Gallega/Madrilena); 2 sucesores (Cantabra->JR Escalada, Catalana->Pere Serrat); T3 0; T4 1 (Hopium: Valérie Leseigneur)",
-  "R3 jun25-noche: T2 10 activos (fed. Murciana/Navarra/Riojana/Vasca, Frank Stephenson CCO, Fernando Saiz GM, Oriol Vilanova GentlemanDrive, Roberto Merhi; Viciano FACV->vicepres, Cornago Flexicar->presidente holding)/1 sinconf (Veronica Mtnez Flamagas); 1 BORRADO (Aurora Fdez dejó Goodyear->Daiichi Sankyo sin recambio); T3 0 dups; T4 1 (Incus Media: Ben Dodson)"
+  "R3 jun25-noche: T2 10 activos (fed. Murciana/Navarra/Riojana/Vasca, Frank Stephenson CCO, Fernando Saiz GM, Oriol Vilanova GentlemanDrive, Roberto Merhi; Viciano FACV->vicepres, Cornago Flexicar->presidente holding)/1 sinconf (Veronica Mtnez Flamagas); 1 BORRADO (Aurora Fdez dejó Goodyear->Daiichi Sankyo sin recambio); T3 0 dups; T4 1 (Incus Media: Ben Dodson)",
+  "R4 jun25-noche: T2 6 activos (Hector Ares Goodyear+email/tel, Juan Carlos Moyano Hankook, Raul Gutierrez Hankook->dir ventas&mkt, Alec Wyman Hennessey->VP, Michael Harley Hennessey, David Herranz Iberian Classic Raid)/2 sinconf (Javier Fdez GT Corsa, Fatima Moreno Honor); 1 BORRADO (Jacobo Ruiz dejó Goodyear->Innotec); T3 0; T4 1 (Kia: Diego Abeledo)"
  ]
 }
