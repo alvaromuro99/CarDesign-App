@@ -262,6 +262,7 @@
   "R1c jun25-noche: T2 1 activo (Ana Belén Rodríguez Saavedra MMT)/2 sinconf (Ricardo Carrasco LD, Javier Fdez Mapfre); 1 reubicado (David Cebrián LG->AutoCebrián CEO); T3 0",
   "R2c jun25-noche: T2 0 activos/2 sinconf (Adrián Pardo Mobility City, Gabriel Brinquis Motorcenter VLC -negocios locales sin nombre público-); T3 0; cola de verificación efectivamente agotada (resto: contactos abreviados de agencia y fichas recién añadidas)",
   "QC jun25-noche: limpieza de calidad — tel #ERROR! (Wayne Bruce), email roto DriiveMe reparado, email en campo Nombre (Lotus CarWagen) inferido, handle IG movido de email a notas (Jowyn Wong), tel duplicado (Fernando Saiz); 84 estados \"No encontrado\"->\"Por verificar\"+nota (alineado a taxonomía); 1 borrada (Cristina Vall-Llosada dejó Seat/Cupra sin recambio). Estados ahora solo {Por verificar, Activo}.",
-  "QC-fix jun25-noche: CORREGIDA la normalización errónea anterior. Estado ahora distingue 3 cubos: Activo (confirmado), No encontrado (comprobado por web sin resultado, 160 filas), Por verificar (nunca comprobado). Antes había unificado No encontrado en Por verificar por error."
+  "QC-fix jun25-noche: CORREGIDA la normalización errónea anterior. Estado ahora distingue 3 cubos: Activo (confirmado), No encontrado (comprobado por web sin resultado, 160 filas), Por verificar (nunca comprobado). Antes había unificado No encontrado en Por verificar por error.",
+  "Verif Por-verificar L1 jun25: 6 activos (Daniel Cuadrado GarageDays, Jesús Fernández Herrera Dermatoclinic, Enrique García-Comas DriiveMe, Álvaro Salvador Fever, Emanuele Bedetti Fuoriconcorso, Valérie Leseigneur Hopium); 1 No encontrado (Mario Serrano EVO). L2: +2 No encontrado (Claudia Sánchez DreamCars, Lucía Alonso Eventos Motor)."
  ]
 }
