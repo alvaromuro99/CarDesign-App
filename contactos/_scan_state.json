@@ -261,6 +261,7 @@
   "T1b jun25-noche (pág 2 Gmail, +0 hilos): enriquecido Jon Visscher (Vcomm: tel +44 7816 906 794, lleva Hennessey y Nichols). Helderburg/Paul Potratz ya estaba. Resto: newsletters/notificaciones/notas ya cubiertas.",
   "R1c jun25-noche: T2 1 activo (Ana Belén Rodríguez Saavedra MMT)/2 sinconf (Ricardo Carrasco LD, Javier Fdez Mapfre); 1 reubicado (David Cebrián LG->AutoCebrián CEO); T3 0",
   "R2c jun25-noche: T2 0 activos/2 sinconf (Adrián Pardo Mobility City, Gabriel Brinquis Motorcenter VLC -negocios locales sin nombre público-); T3 0; cola de verificación efectivamente agotada (resto: contactos abreviados de agencia y fichas recién añadidas)",
-  "QC jun25-noche: limpieza de calidad — tel #ERROR! (Wayne Bruce), email roto DriiveMe reparado, email en campo Nombre (Lotus CarWagen) inferido, handle IG movido de email a notas (Jowyn Wong), tel duplicado (Fernando Saiz); 84 estados \"No encontrado\"->\"Por verificar\"+nota (alineado a taxonomía); 1 borrada (Cristina Vall-Llosada dejó Seat/Cupra sin recambio). Estados ahora solo {Por verificar, Activo}."
+  "QC jun25-noche: limpieza de calidad — tel #ERROR! (Wayne Bruce), email roto DriiveMe reparado, email en campo Nombre (Lotus CarWagen) inferido, handle IG movido de email a notas (Jowyn Wong), tel duplicado (Fernando Saiz); 84 estados \"No encontrado\"->\"Por verificar\"+nota (alineado a taxonomía); 1 borrada (Cristina Vall-Llosada dejó Seat/Cupra sin recambio). Estados ahora solo {Por verificar, Activo}.",
+  "QC-fix jun25-noche: CORREGIDA la normalización errónea anterior. Estado ahora distingue 3 cubos: Activo (confirmado), No encontrado (comprobado por web sin resultado, 160 filas), Por verificar (nunca comprobado). Antes había unificado No encontrado en Por verificar por error."
  ]
 }
