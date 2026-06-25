@@ -231,7 +231,7 @@
   "19e8d62e80a0ee5e"
  ],
  "firmas_done": false,
- "verify_index": 697,
+ "verify_index": 716,
  "dedup_index": 0,
  "fill_index": 1007,
  "rounds_log": [
@@ -259,6 +259,7 @@
   "R7b jun25-noche: T2 2 activos (Lalama Sillah influencer, Iván Iglesias GT2i España)/1 sinconf (Gerard Gatell); T3 0 dups; T4 0 (fichas vacías restantes = emails genéricos de marca)",
   "R8b jun25-noche: T2 3 activos (Rubén Díaz Lavado Hi-Speed Sim, Kike GTR, Juan Faro -con nota legal-); T3 0 dups; T4 0",
   "T1b jun25-noche (pág 2 Gmail, +0 hilos): enriquecido Jon Visscher (Vcomm: tel +44 7816 906 794, lleva Hennessey y Nichols). Helderburg/Paul Potratz ya estaba. Resto: newsletters/notificaciones/notas ya cubiertas.",
-  "R1c jun25-noche: T2 1 activo (Ana Belén Rodríguez Saavedra MMT)/2 sinconf (Ricardo Carrasco LD, Javier Fdez Mapfre); 1 reubicado (David Cebrián LG->AutoCebrián CEO); T3 0"
+  "R1c jun25-noche: T2 1 activo (Ana Belén Rodríguez Saavedra MMT)/2 sinconf (Ricardo Carrasco LD, Javier Fdez Mapfre); 1 reubicado (David Cebrián LG->AutoCebrián CEO); T3 0",
+  "R2c jun25-noche: T2 0 activos/2 sinconf (Adrián Pardo Mobility City, Gabriel Brinquis Motorcenter VLC -negocios locales sin nombre público-); T3 0; cola de verificación efectivamente agotada (resto: contactos abreviados de agencia y fichas recién añadidas)"
  ]
 }
