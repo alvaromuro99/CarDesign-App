@@ -231,9 +231,9 @@
   "19ecc6dea4a82a17"
  ],
  "firmas_done": false,
- "verify_index": 730,
+ "verify_index": 781,
  "dedup_index": 0,
- "fill_index": 940,
+ "fill_index": 1007,
  "rounds_log": [
   "R1 jun25: T2 13 activos/4 sinconf; T3 0 dups; T4 0 (Touring/Mondragon sin contacto nominal)",
   "R2 jun25: T2 8 activos/1 sinconf (Jordá,Christine GZ,Turiel,Collado,Zuazo,Gómara,Josep Rodríguez,Graziani); T3 0; T4 1 (Yokohama: María de Montero Fontán)",
@@ -253,6 +253,7 @@
   "R1b jun25-noche (wrap a 0): T2 4 activos (Julie Scott FrankStephenson, Isabel García-Frontera FreeNow DG, Lorena Pastorino Fever, Álvaro Fontes Ascari)/1 sinconf (Maria Santesteban Fever); 1 BORRADO (Diego Galindo dejó DriiveMe->Vertix); T3 0; T4 0 (wrap fill a 0; Bertone/Rosso Corsa sin contacto nominal); fichas vacías restantes son emails genéricos de marca",
   "R2b jun25-noche: T2 3 activos (Nuria Presa Agüero Honor, Jon Visscher Hennessey/Vcomm, Miguel Sesé Hankook)/2 sinconf (Ana Ruiz Galp, Rian Ordóñez Huawei); 1 reubicado (Javier Martínez ex-Hawkers->motorsport); T3 0; T4 1 (RM Sothebys EMEA: Peter Haynes)",
   "R3b jun25-noche: T2 2 activos (Raúl Díez Vázquez IFEMA, Leticia Poveda Línea Directa+email); 1 sucesora (Línea Directa: Santiago Velázquez->Leticia Iglesias); T3 0; T4 0 (mi relleno R2b de Peter Haynes resultó dup); T3 1 FUSIÓN (Peter Haynes RM Sothebys: borrada redundante, rol movido a ficha verificada)",
-  "R4b jun25-noche: T2 3 activos (Luis Ramos Michelin Competición, Manuel López Riego MB Concesur, Nuria del Olmo Mapfre)/3 sinconf (Javier Ponte Meguiars, Rebeca Álvarez MSi, David Herranz Michelin); T3 0; T4 1 (SMG: Tom Cooney Dir. Communications)"
+  "R4b jun25-noche: T2 3 activos (Luis Ramos Michelin Competición, Manuel López Riego MB Concesur, Nuria del Olmo Mapfre)/3 sinconf (Javier Ponte Meguiars, Rebeca Álvarez MSi, David Herranz Michelin); T3 0; T4 1 (SMG: Tom Cooney Dir. Communications)",
+  "R5b jun25-noche: T2 1 activo (Claudia Morcillo Aguilar Norauto)/2 sinconf (G Ricchetti Officine Fioravanti -fundador es Tusco Cavalli-, Daniel Díaz MT Performance); cola de verificación casi agotada (resto son influencers/contactos abreviados); T3 0; T4 1 (Time Out Barcelona: María José Gómez)"
  ]
 }
