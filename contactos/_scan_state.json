@@ -231,7 +231,7 @@
   "19ecc6dea4a82a17"
  ],
  "firmas_done": false,
- "verify_index": 382,
+ "verify_index": 467,
  "dedup_index": 0,
  "fill_index": 1007,
  "rounds_log": [
@@ -255,6 +255,7 @@
   "R3b jun25-noche: T2 2 activos (Raúl Díez Vázquez IFEMA, Leticia Poveda Línea Directa+email); 1 sucesora (Línea Directa: Santiago Velázquez->Leticia Iglesias); T3 0; T4 0 (mi relleno R2b de Peter Haynes resultó dup); T3 1 FUSIÓN (Peter Haynes RM Sothebys: borrada redundante, rol movido a ficha verificada)",
   "R4b jun25-noche: T2 3 activos (Luis Ramos Michelin Competición, Manuel López Riego MB Concesur, Nuria del Olmo Mapfre)/3 sinconf (Javier Ponte Meguiars, Rebeca Álvarez MSi, David Herranz Michelin); T3 0; T4 1 (SMG: Tom Cooney Dir. Communications)",
   "R5b jun25-noche: T2 1 activo (Claudia Morcillo Aguilar Norauto)/2 sinconf (G Ricchetti Officine Fioravanti -fundador es Tusco Cavalli-, Daniel Díaz MT Performance); cola de verificación casi agotada (resto son influencers/contactos abreviados); T3 0; T4 1 (Time Out Barcelona: María José Gómez)",
-  "R6b jun25-noche: T2 3 activos influencers motor (Ahikar Azcona, Alex De La Rosa/Refuel, Fernando Lucía/FerLucia); T3 0; T3 1 BORRADO (Cision relay RM Sothebys redundante); T4 0 (resto fichas vacías son emails genéricos de marca)"
+  "R6b jun25-noche: T2 3 activos influencers motor (Ahikar Azcona, Alex De La Rosa/Refuel, Fernando Lucía/FerLucia); T3 0; T3 1 BORRADO (Cision relay RM Sothebys redundante); T4 0 (resto fichas vacías son emails genéricos de marca)",
+  "R7b jun25-noche: T2 2 activos (Lalama Sillah influencer, Iván Iglesias GT2i España)/1 sinconf (Gerard Gatell); T3 0 dups; T4 0 (fichas vacías restantes = emails genéricos de marca)"
  ]
 }
